@@ -17,11 +17,11 @@ class ManagerBasedAnimationEnv(ManagerBasedRLEnv):
         super().__init__(cfg=cfg, render_mode=render_mode, **kwargs)
     
     def load_managers(self):
-        super().load_managers()
         self.motion_data_manager = MotionDataManager(self.cfg.motion_data, self)
         print("[INFO] Motion Data Manager: ", self.motion_data_manager)
         self.animation_manager = AnimationManager(self.cfg.animation, self)
         print("[INFO] Animation Manager: ", self.animation_manager)
+        super().load_managers()
         
     def step(self, action: torch.Tensor) -> VecEnvStepReturn:
         """Execute one time-step of the environment's dynamics and reset terminated environments.
