@@ -55,7 +55,7 @@ class G1RslRlOnPolicyRunnerAmpCfg(RslRlOnPolicyRunnerCfg):
                 hidden_dims=[1024, 512],
                 activation="elu",
                 style_reward_scale=5.0,
-                task_style_lerp=0.1
+                task_style_lerp=1.0
             ),
         )
     )

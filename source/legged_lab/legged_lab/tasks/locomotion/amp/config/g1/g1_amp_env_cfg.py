@@ -48,10 +48,10 @@ class G1AmpRewards():
     track_lin_vel_xy_exp = RewTerm(
         func=mdp.track_lin_vel_xy_yaw_frame_exp,
         weight=1.0,
-        params={"command_name": "base_velocity", "std": 0.5},
+        params={"command_name": "base_velocity", "std": 0.25},
     )
     track_ang_vel_z_exp = RewTerm(
-        func=mdp.track_ang_vel_z_world_exp, weight=0.5, params={"command_name": "base_velocity", "std": 0.5}
+        func=mdp.track_ang_vel_z_world_exp, weight=0.5, params={"command_name": "base_velocity", "std": 0.25}
     )
     
     # -- Alive
@@ -64,7 +64,7 @@ class G1AmpRewards():
     base_height = RewTerm(func=mdp.base_height_l2, weight=-10.0,
         params={
             "target_height": 0.78,
-            "sensor_cfg": SceneEntityCfg("height_scanner")
+            # "sensor_cfg": SceneEntityCfg("height_scanner")
         },
     )
     
@@ -110,24 +110,13 @@ class G1AmpRewards():
             "asset_cfg": SceneEntityCfg("robot", body_names=".*_ankle_roll_link"),
         },
     )
-    feet_air_time = RewTerm(
-        func=mdp.feet_air_time_positive_biped,
-        weight=0.0,
-        params={
-            "command_name": "base_velocity",
-            "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_ankle_roll_link"),
-            "threshold": 0.4,
-        },
-    )
-    # feet_clearance = RewTerm(
-    #     func=mdp.feet_clearance_reward,
-    #     weight=1.0,
+    # feet_air_time = RewTerm(
+    #     func=mdp.feet_air_time_positive_biped,
+    #     weight=0.0,
     #     params={
-    #         "std": 0.05,
-    #         "tanh_mult": 2.0,
-    #         "base_height": 0.78,
-    #         "target_feet_height": 0.1,
-    #         "asset_cfg": SceneEntityCfg("robot", body_names=".*ankle_roll.*"),
+    #         "command_name": "base_velocity",
+    #         "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_ankle_roll_link"),
+    #         "threshold": 0.4,
     #     },
     # )
     feet_clearance = RewTerm(
@@ -191,8 +180,8 @@ class G1AmpEnvCfg(LocomotionAmpEnvCfg):
         )
         self.motion_data.motion_dataset.motion_data_weights = {
             "C4_-_run_to_walk_a_stageii": 1.0, 
-            "C11_-_run_turn_left_90_stageii": 1.0,
-            "C14_-_run_turn_right_90_stageii": 1.0,
+            # "C11_-_run_turn_left_90_stageii": 1.0,
+            # "C14_-_run_turn_right_90_stageii": 1.0,
         }
 
         # ------------------------------------------------------
