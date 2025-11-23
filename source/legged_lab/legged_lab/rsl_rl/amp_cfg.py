@@ -1,5 +1,5 @@
 from dataclasses import MISSING
-
+from typing import Literal
 from isaaclab.utils import configclass
 
 
@@ -44,3 +44,6 @@ class RslRlAmpCfg:
 
     amp_discriminator: AMPDiscriminatorCfg = AMPDiscriminatorCfg()
     """Configuration for the AMP discriminator network."""
+    
+    loss_type: Literal["GAN", "LSGAN", "WGAN"] = "LSGAN"
+    """Type of loss function used for the AMP discriminator (e.g., 'GAN', 'LSGAN', 'WGAN')"""

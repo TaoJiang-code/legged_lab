@@ -2,9 +2,10 @@ import os
 
 from isaaclab.utils import configclass
 
-from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, RslRlPpoActorCriticRecurrentCfg, RslRlPpoAlgorithmCfg
+from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, RslRlSymmetryCfg
 from legged_lab.rsl_rl import RslRlPpoAmpAlgorithmCfg, RslRlAmpCfg, RslRlPpoActorCriticConv2dCfg
 from legged_lab import LEGGED_LAB_ROOT_DIR
+from legged_lab.tasks.locomotion.amp.mdp.symmetry import g1
 
 @configclass
 class G1RslRlOnPolicyRunnerAmpCfg(RslRlOnPolicyRunnerCfg):
@@ -62,9 +63,13 @@ class G1RslRlOnPolicyRunnerAmpCfg(RslRlOnPolicyRunnerCfg):
             amp_discriminator=RslRlAmpCfg.AMPDiscriminatorCfg(
                 hidden_dims=[1024, 512],
                 activation="elu",
-                style_reward_scale=5.0,
+                style_reward_scale=6.0,
                 task_style_lerp=0.5
             ),
+            loss_type="LSGAN"
+        ),
+        symmetry_cfg=RslRlSymmetryCfg(
+            use_data_augmentation=True, data_augmentation_func=g1.compute_symmetric_states
         )
     )
 
