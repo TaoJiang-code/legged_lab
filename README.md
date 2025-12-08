@@ -25,6 +25,8 @@ https://github.com/user-attachments/assets/ed84a8a3-f349-44ac-9cfd-2baab2265a25
 
 ## News & Updates
 
+- 2025/11/23: Add Symmetry data augmentation in AMP training.
+- 2025/11/22: New implementation of AMP. 
 - 2025/11/19: Add DeepMimic for G1. 
 - 2025/10/14: Update to support rsl_rl v3.1.1. Only walking in flat terrain is supported now.
 - 2025/08/24: Support using more steps observations and motion data in AMP training.
@@ -33,7 +35,8 @@ https://github.com/user-attachments/assets/ed84a8a3-f349-44ac-9cfd-2baab2265a25
 
 ## Installation
 
-- Install Isaac Lab by following the [installation guide](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html). We recommend using the conda installation as it simplifies calling Python scripts from the terminal.
+- Install Isaac Lab by following the [installation guide](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html). The version should be `2.2.1`. 
+We recommend using the conda installation as it simplifies calling Python scripts from the terminal.
 
 - Clone this repository separately from the Isaac Lab installation (i.e. outside the `IsaacLab` directory):
 
@@ -45,7 +48,6 @@ git clone https://github.com/zitongbai/legged_lab
 git clone git@github.com:zitongbai/legged_lab.git
 
 cd legged_lab
-git checkout v2.2.1
 ```
 
 - Using a python interpreter that has Isaac Lab installed, install the library
@@ -63,7 +65,7 @@ git clone https://github.com/zitongbai/rsl_rl.git
 git clone git@github.com:zitongbai/rsl_rl.git
 
 cd rsl_rl
-git checkout feature/amp_3
+git checkout feature/amp
 ```
 
 - Install the forked RSL-RL library:
@@ -110,14 +112,14 @@ For more details about the arguments, run `python scripts/rsl_rl/train.py -h`. -
 To train the AMP algorithm, you can run the following command:
 
 ```bash
-python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-Flat-G1-v0 --headless --max_iterations 10000
+python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 10000
 ```
 
 If you want to train it in a non-default gpu, you can pass more arguments to the command:
 
 ```bash
 # replace `x` with the gpu id you want to use
-python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-Flat-G1-v0 --headless --max_iterations 50000 --device cuda:x agent.device=cuda:x
+python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 50000 --device cuda:x agent.device=cuda:x
 ```
 
 For more details about the arguments, run `python scripts/rsl_rl/train.py -h`.
@@ -128,7 +130,7 @@ You can play the trained model in a headless mode and record the video:
 
 ```bash
 # replace the checkpoint path with the path to your trained model
-python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-Flat-G1-Play-v0 --headless --num_envs 64 --video --checkpoint logs/rsl_rl/experiment_name/run_name/model_xxx.pt
+python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --num_envs 64 --video --checkpoint logs/rsl_rl/experiment_name/run_name/model_xxx.pt
 ```
 
 The video will be saved in the `logs/rsl_rl/experiment_name/run_name/videos/play` directory.
@@ -138,7 +140,7 @@ The video will be saved in the `logs/rsl_rl/experiment_name/run_name/videos/play
 - [ ] Add more legged robots, such as Unitree H1
 - [x] Self-contact penalty in AMP
 - [x] Asymmetric Actor-Critic in AMP
-- [ ] Symmetric Reward
+- [x] Symmetric Reward
 - [ ] Sim2sim in mujoco
 - [ ] Add support for image observations
 - [ ] Walk in rough terrain with AMP
@@ -149,4 +151,5 @@ The video will be saved in the `logs/rsl_rl/experiment_name/run_name/videos/play
 - [RSL-RL](https://github.com/leggedrobotics/rsl_rl)
 - [AMP_for_hardware](https://github.com/Alescontrela/AMP_for_hardware)
 - [GMR](https://github.com/YanjieZe/GMR)
+- [MimicKit](https://github.com/xbpeng/MimicKit)
 
