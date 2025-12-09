@@ -25,6 +25,7 @@ https://github.com/user-attachments/assets/ed84a8a3-f349-44ac-9cfd-2baab2265a25
 
 ## News & Updates
 
+- 2025/12/05: Use git lfs to store large files, including motion data and robot models.
 - 2025/11/23: Add Symmetry data augmentation in AMP training.
 - 2025/11/22: New implementation of AMP. 
 - 2025/11/19: Add DeepMimic for G1. 
@@ -37,6 +38,8 @@ https://github.com/user-attachments/assets/ed84a8a3-f349-44ac-9cfd-2baab2265a25
 
 - Install Isaac Lab by following the [installation guide](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html). The version should be `2.2.1`. 
 We recommend using the conda installation as it simplifies calling Python scripts from the terminal.
+
+- Before cloning this repository, make sure you have installed `git lfs`. 
 
 - Clone this repository separately from the Isaac Lab installation (i.e. outside the `IsaacLab` directory):
 
