@@ -14,7 +14,7 @@ This repository is an extension for legged robot reinforcement learning based on
 
 **Key Features:**
 
-- `RL` Support vanilla RL for legged robots, including Unitree G1, Go2.
+- `DeepMimic` for humanoid robots, including Unitree G1.
 - `AMP` Adversarial Motion Priors (AMP) for humanoid robots, including Unitree G1. We suggest retargeting the human motion data by [GMR](https://github.com/YanjieZe/GMR).
 
 ## Demo
