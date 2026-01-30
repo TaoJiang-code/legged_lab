@@ -9,6 +9,8 @@ from isaaclab.sensors import ContactSensor
 from isaaclab.assets import RigidObject
 import isaaclab.utils.math as math_utils
 
+from isaaclab.assets import Articulation
+
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
     
@@ -43,3 +45,12 @@ def stand_still_joint_deviation_l1(
     command = env.command_manager.get_command(command_name)
     # Penalize motion when command is nearly zero.
     return mdp.joint_deviation_l1(env, asset_cfg) * (torch.norm(command[:, :2], dim=1) < command_threshold)
+
+def joint_deviation(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    asset: Articulation = env.scene[asset_cfg.name]
+    angle = asset.data.joint_pos[:, asset_cfg.joint_ids] - asset.data.default_joint_pos[:, asset_cfg.joint_ids]
+    zero_flag = (
+        torch.norm(env.command_manager.get_command(command_name)[:, :2], dim=1) + torch.abs(env.command_manager.get_command(command_name)[:, 2])
+    ) < 0.1
+    neg_x_flag = (env.command_manager.get_command(command_name)[:, 0] >= 0)
+    return torch.sum(torch.abs(angle), dim=1) * zero_flag * neg_x_flag

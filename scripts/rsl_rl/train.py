@@ -232,3 +232,10 @@ if __name__ == "__main__":
     main()
     # close sim app
     simulation_app.close()
+
+
+# tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger wandb
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger tensorboard

@@ -78,6 +78,8 @@ from isaaclab.scene import InteractiveScene
 # load robot cfg as single_retarget does
 if args_cli.robot == "g1":
     from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG as ROBOT_CFG
+elif args_cli.robot == "elf3_lite":
+    from legged_lab.assets.elf3 import ELF3LITE_CFG as ROBOT_CFG
 else:
     raise ValueError(f"Robot {args_cli.robot} not supported.")
 
@@ -177,3 +179,18 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# python scripts/tools/retarget/dataset_retarget.py \
+#     --robot g1 \
+#     --input_dir temp/gmr_data/ \
+#     --output_dir temp/lab_data/ \
+#     --config_file scripts/tools/retarget/config/g1_29dof.yaml \
+#     --loop clamp
+
+# python scripts/tools/retarget/dataset_retarget.py \
+#     --robot elf3_lite \
+#     --input_dir temp/gmr_data/ \
+#     --output_dir temp/lab_data/ \
+#     --config_file scripts/tools/retarget/config/elf3_lite.yaml \
+#     --loop clamp

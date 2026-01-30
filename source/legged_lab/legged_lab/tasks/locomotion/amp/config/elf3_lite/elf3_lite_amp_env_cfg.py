@@ -99,10 +99,44 @@ class elf3_lite_AmpRewards():
         weight=-0.1,
         params={"asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
     )
-    
+#=========================================================================================#
+# # 原地不动
+#     joint_stationary_waist = RewTerm(
+#         func=mdp.joint_deviation,
+#         weight=-0.3,
+#         params={
+#             "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
+#     )
+#     joint_stationary_legs = RewTerm(
+#         func=mdp.joint_deviation,
+#         # weight=-0.02,
+#         weight=-0.2,
+#         params={
+#             "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg(
+#                 "robot",
+#                 joint_names=[
+#                     # ".*_hip_pitch_joint",
+#                     # ".*_hip_roll_joint",
+#                     # ".*_knee_joint",
+#                     # ".*_ankle_pitch_joint",
+#                     # ".*_ankle_roll_joint",
+#                     ".*_hip_y_joint",
+#                     ".*_hip_x_joint",
+#                     ".*_knee_y_joint",
+#                     ".*_ankle_y_joint",
+#                     ".*_ankle_x_joint",
+#                 ],
+#             )
+#         },
+#     )
+
+#=========================================================================================#
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
-        weight=0.5,
+        # weight=0.5,
+        weight=0.7,
         params={
             "command_name": "base_velocity",
             # "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_ankle_roll_link"),
@@ -217,7 +251,10 @@ class elf3_lite_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 3.0)
+        # self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 3.0)
+        # self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
+        # self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)

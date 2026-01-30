@@ -214,3 +214,5 @@ if __name__ == "__main__":
     main()
     # close sim app
     simulation_app.close()
+
+# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --num_envs 3 --checkpoint logs/rsl_rl/g1_amp/2026-01-30_15-41-54/model_2000.pt

@@ -36,6 +36,8 @@ from isaaclab.assets import Articulation
 ##
 if args_cli.robot == "g1":
     from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG as ROBOT_CFG
+elif args_cli.robot == "elf3_lite":
+    from legged_lab.assets.elf3 import ELF3LITE_CFG as ROBOT_CFG
 else:
     raise ValueError(f"Robot {args_cli.robot} not supported.")
 
@@ -77,3 +79,5 @@ if __name__ == "__main__":
     body_masses = robot.data.default_mass[0]
     for name, mass in zip(body_names, body_masses):
         print(f"Body: {name}, Mass: {mass} kg")
+# legged_lab/scripts/tools/print_lab_joint_body_names.py
+# python scripts/tools/print_lab_joint_body_names.py --robot elf3_lite
