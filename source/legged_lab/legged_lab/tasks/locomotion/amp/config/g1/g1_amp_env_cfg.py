@@ -64,15 +64,46 @@ class G1AmpRewards():
         params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*_ankle_pitch_joint", ".*_ankle_roll_joint"])},
     )
     
+#=========================================================================================#
+# 原生
+    # joint_deviation_hip = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.1,
+    #     params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_yaw_joint", ".*_hip_roll_joint"])},
+    # )
+    # joint_deviation_arms = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.05,
+    #     params={
+    #         "asset_cfg": SceneEntityCfg(
+    #             "robot",
+    #             joint_names=[
+    #                 ".*_shoulder_.*_joint",
+    #                 ".*_elbow_joint",
+    #                 ".*_wrist_.*_joint",
+    #             ],
+    #         )
+    #     },
+    # )
+    # joint_deviation_waist = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.1,
+    #     params={"asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
+    # )
+#=========================================================================================#
+ #修改
     joint_deviation_hip = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.1,
-        params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_yaw_joint", ".*_hip_roll_joint"])},
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_yaw_joint", ".*_hip_roll_joint"])},
     )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.05,
         params={
+            # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
                 "robot",
                 joint_names=[
@@ -86,8 +117,38 @@ class G1AmpRewards():
     joint_deviation_waist = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.1,
-        params={"asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
     )
+# 原地不动
+    joint_stationary_waist = RewTerm(
+        func=mdp.joint_deviation,
+        weight=-0.3,
+        params={
+            "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
+    )
+    joint_stationary_legs = RewTerm(
+        func=mdp.joint_deviation,
+        # weight=-0.02,
+        weight=-0.2,
+        params={
+            "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg(
+                "robot",
+                joint_names=[
+                    ".*_hip_pitch_joint",
+                    ".*_hip_roll_joint",
+                    ".*_knee_joint",
+                    ".*_ankle_pitch_joint",
+                    ".*_ankle_roll_joint",
+                ],
+            )
+        },
+    )
+
+#=========================================================================================#
     
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,

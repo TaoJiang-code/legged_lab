@@ -125,7 +125,7 @@ class G1AmpRewards():
     )
 # 原地不动
     joint_stationary_all_body = RewTerm(
-        func=mdp.joint_deviation_custom,
+        func=mdp.joint_deviation,
         # weight=-0.02,
         weight=-0.2,
         params={
