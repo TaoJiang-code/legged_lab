@@ -54,3 +54,12 @@ def joint_deviation(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneE
     ) < 0.1
     neg_x_flag = (env.command_manager.get_command(command_name)[:, 0] >= 0)
     return torch.sum(torch.abs(angle), dim=1) * zero_flag * neg_x_flag
+
+def joint_deviation_custom(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    asset: Articulation = env.scene[asset_cfg.name]
+    angle = asset.data.joint_pos[:, asset_cfg.joint_ids] - asset.data.default_joint_pos[:, asset_cfg.joint_ids]
+    zero_flag = (
+        torch.norm(env.command_manager.get_command(command_name)[:, :2], dim=1) + torch.abs(env.command_manager.get_command(command_name)[:, 2])
+    ) < 0.1
+    neg_x_flag = (env.command_manager.get_command(command_name)[:, 0] >= 0)
+    return torch.sum(torch.abs(angle), dim=1) * zero_flag * neg_x_flag

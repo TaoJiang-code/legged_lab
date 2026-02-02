@@ -27,7 +27,7 @@ from legged_lab import LEGGED_LAB_ROOT_DIR
 # Pre-defined configs
 ##
 from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG
-
+from legged_lab.assets.unitree import UNITREE_G1_combat_stance_29DOF_CFG
 # The order must align with the retarget config file scripts/tools/retarget/config/g1_29dof.yaml
 KEY_BODY_NAMES = [
     "left_ankle_roll_link", 
@@ -124,15 +124,8 @@ class G1AmpRewards():
             "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
     )
 # 原地不动
-    joint_stationary_waist = RewTerm(
-        func=mdp.joint_deviation,
-        weight=-0.3,
-        params={
-            "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
-    )
-    joint_stationary_legs = RewTerm(
-        func=mdp.joint_deviation,
+    joint_stationary_all_body = RewTerm(
+        func=mdp.joint_deviation_custom,
         # weight=-0.02,
         weight=-0.2,
         params={
@@ -140,11 +133,7 @@ class G1AmpRewards():
             "asset_cfg": SceneEntityCfg(
                 "robot",
                 joint_names=[
-                    # ".*_hip_pitch_joint",
-                    # ".*_hip_roll_joint",
-                    # ".*_knee_joint",
-                    ".*_ankle_pitch_joint",
-                    ".*_ankle_roll_joint",
+                    ".*_joint",
                 ],
             )
         },

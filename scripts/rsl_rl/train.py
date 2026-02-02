@@ -239,3 +239,19 @@ if __name__ == "__main__":
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger wandb
 
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger tensorboard
+
+
+
+
+
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 150000 --logger wandb
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 150000 --logger tensorboard
+
+
+
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-combat_stance-v0 --headless --max_iterations 150000 --logger wandb
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-combat_stance-v0 --headless --max_iterations 150000 --logger tensorboard
