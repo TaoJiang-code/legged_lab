@@ -173,7 +173,7 @@ class G1AmpRewards():
 
 
 @configclass
-class G1AmpEnvCfg(LocomotionAmpEnvCfg):
+class G1AmpEnvCfg_combat_stance(LocomotionAmpEnvCfg):
     """Configuration for the G1 AMP environment."""
     
     rewards: G1AmpRewards = G1AmpRewards()
@@ -323,7 +323,7 @@ class G1AmpEnvCfg(LocomotionAmpEnvCfg):
 
 
 @configclass
-class G1AmpEnvCfg_PLAY(G1AmpEnvCfg):
+class G1AmpEnvCfg_combat_stance_PLAY(G1AmpEnvCfg_combat_stance):
     
     def __post_init__(self):
         super().__post_init__()
