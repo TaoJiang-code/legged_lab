@@ -93,16 +93,16 @@ class G1AmpRewards():
  #修改
     joint_deviation_hip = RewTerm(
         func=mdp.joint_deviation_l1,
-        # weight=-0.1,
-        weight=-0.05,
+        weight=-0.1,
+        # weight=-0.05,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_yaw_joint", ".*_hip_roll_joint"])},
     )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
-        # weight=-0.05,
-        weight=-0.02,
+        weight=-0.05,
+        # weight=-0.02,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
@@ -117,12 +117,19 @@ class G1AmpRewards():
     )
     joint_deviation_waist = RewTerm(
         func=mdp.joint_deviation_l1,
-        # weight=-0.1,
-        weight=-0.2,
+        weight=-0.1,
+        # weight=-0.2,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
     )
+
+    undesired_contacts = RewTerm(
+        func=mdp.undesired_contacts,
+        weight=-1.0,
+        params={"sensor_cfg": SceneEntityCfg("contact_forces", body_names=[".*_knee_link",".*_shoulder_.*_link",".*_elbow_link",".*_wrist_.*_link",".*_hip_.*_link","torso_link"]), "threshold": 1.0},
+    )
+
 # 原地不动
     joint_stationary_all_body = RewTerm(
         func=mdp.joint_deviation,
@@ -216,14 +223,18 @@ class G1AmpEnvCfg_combat_stance(LocomotionAmpEnvCfg):
 
         self.motion_data.motion_dataset.motion_data_weights = {
             "back_ward_body": 1.0,
-            "backward": 1.0,
-            "backward2": 1.0,
+
+            # "backward": 1.0,
+            # "backward2": 1.0,
+
             "forward_turn_right": 1.0,
-            "left": 1.0,
-            "right": 1.0,
-            "turn_around": 1.0,
-            "turn_left": 1.0,
-            "turn_right": 1.0,
+            # "left": 1.0,
+            # "right": 1.0,
+
+            # "turn_around": 1.0,
+            
+            # "turn_left": 1.0,
+            # "turn_right": 1.0,
         }
 
         # ------------------------------------------------------
@@ -294,7 +305,7 @@ class G1AmpEnvCfg_combat_stance(LocomotionAmpEnvCfg):
         # self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 3.0)
         # self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         # self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 0.5)
+        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         self.commands.base_velocity.ranges.ang_vel_z = (-1, 1)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
