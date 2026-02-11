@@ -217,4 +217,4 @@ if __name__ == "__main__":
 
 # python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --num_envs 3 --checkpoint logs/rsl_rl/g1_amp/2026-01-30_15-41-54/model_2000.pt
 
-# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-G1-v0 --num_envs 3 --checkpoint logs/rsl_rl/g1_amp/2026-01-28_10-43-58/model_67000.pt
+# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-G1-combat_stance-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/g1_amp/2026-02-02_15-27-44/model_9000.pt

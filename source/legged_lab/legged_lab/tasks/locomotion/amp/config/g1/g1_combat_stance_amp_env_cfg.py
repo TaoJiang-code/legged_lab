@@ -170,7 +170,7 @@ class G1AmpEnvCfg_combat_stance(LocomotionAmpEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         
-        self.scene.robot = UNITREE_G1_29DOF_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        self.scene.robot = UNITREE_G1_combat_stance_29DOF_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
 
         # ------------------------------------------------------
         # motion data
@@ -320,9 +320,9 @@ class G1AmpEnvCfg_combat_stance_PLAY(G1AmpEnvCfg_combat_stance):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (0.5, 3.0)
-        self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
-        self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-1, 1)
+        self.commands.base_velocity.ranges.lin_vel_y = (0, 0)
+        self.commands.base_velocity.ranges.ang_vel_z = (0, 0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)
         
         self.events.reset_from_ref = None
