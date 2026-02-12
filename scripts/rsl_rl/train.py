@@ -236,22 +236,25 @@ if __name__ == "__main__":
 
 # tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp
 
+# elf3_lite
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger wandb
 
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger tensorboard
 
 
 
-
-
-
+# G1
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 150000 --logger wandb
 
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-v0 --headless --max_iterations 150000 --logger tensorboard
 
 
 
-
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-combat_stance-v0 --headless --max_iterations 150000 --logger wandb
 
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-G1-combat_stance-v0 --headless --max_iterations 150000 --logger tensorboard
+
+# qingyun_z1
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1-v0 --headless --max_iterations 150000 --logger wandb
+
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1-v0 --headless --max_iterations 150000 --logger tensorboard
