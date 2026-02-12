@@ -196,3 +196,10 @@ if __name__ == '__main__':
 #     --output_dir temp/lab_data/ \
 #     --config_file scripts/tools/retarget/config/elf3_lite.yaml \
 #     --loop clamp
+
+# python scripts/tools/retarget/dataset_retarget.py \
+#     --robot qingyun_z1 \
+#     --input_dir temp/gmr_data/ \
+#     --output_dir temp/lab_data/ \
+#     --config_file scripts/tools/retarget/config/qingyun_z1.yaml \
+#     --loop clamp
