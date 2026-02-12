@@ -80,6 +80,8 @@ if args_cli.robot == "g1":
     from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG as ROBOT_CFG
 elif args_cli.robot == "elf3_lite":
     from legged_lab.assets.elf3 import ELF3LITE_CFG as ROBOT_CFG
+elif args_cli.robot == "qingyun_z1":
+    from legged_lab.assets.qingyun_z1 import qingyun_z1_CFG as ROBOT_CFG
 else:
     raise ValueError(f"Robot {args_cli.robot} not supported.")
 

@@ -1,68 +1,103 @@
 gmr_dof_names:
-  - loin_yaw_joint_motor
+  - loin_yaw_joint
 
-  - leg_l1_joint_motor
-  - leg_l2_joint_motor
-  - leg_l3_joint_motor
-  - leg_l4_joint_motor
-  - leg_l5_joint_motor
+  - leg_l1_joint
+  - leg_l2_joint
+  - leg_l3_joint
+  - leg_l4_joint
+  - leg_l5_joint
 
-  - leg_r1_joint_motor
-  - leg_r2_joint_motor
-  - leg_r3_joint_motor
-  - leg_r4_joint_motor
-  - leg_r5_joint_motor
+  - leg_r1_joint
+  - leg_r2_joint
+  - leg_r3_joint
+  - leg_r4_joint
+  - leg_r5_joint
 
-  - l_shoulder_pitch_joint_motor
-  - l_shoulder_roll_joint_motor
-  - l_shoulder_yaw_joint_motor
-  - l_arm_pitch_joint_motor
+  - l_shoulder_pitch_joint
+  - l_shoulder_roll_joint
+  - l_shoulder_yaw_joint
+  - l_arm_pitch_joint
 
-  - r_shoulder_pitch_joint_motor
-  - r_shoulder_roll_joint_motor
-  - r_shoulder_yaw_joint_motor
-  - r_arm_pitch_joint_motor
+  - r_shoulder_pitch_joint
+  - r_shoulder_roll_joint
+  - r_shoulder_yaw_joint
+  - r_arm_pitch_joint
 
 
 lab_dof_names:
-  - left_hip_pitch_joint
-  - right_hip_pitch_joint
-  - waist_yaw_joint
-  - left_hip_roll_joint
-  - right_hip_roll_joint
-  - waist_roll_joint
-  - left_hip_yaw_joint
-  - right_hip_yaw_joint
-  - waist_pitch_joint
-  - left_knee_joint
-  - right_knee_joint
-  - left_shoulder_pitch_joint
-  - right_shoulder_pitch_joint
-  - left_ankle_pitch_joint
-  - right_ankle_pitch_joint
-  - left_shoulder_roll_joint
-  - right_shoulder_roll_joint
-  - left_ankle_roll_joint
-  - right_ankle_roll_joint
-  - left_shoulder_yaw_joint
-  - right_shoulder_yaw_joint
-  - left_elbow_joint
-  - right_elbow_joint
-  - left_wrist_roll_joint
-  - right_wrist_roll_joint
-  - left_wrist_pitch_joint
-  - right_wrist_pitch_joint
-  - left_wrist_yaw_joint
-  - right_wrist_yaw_joint
+  - loin_yaw_joint
+  - l_shoulder_pitch_joint
+  - r_shoulder_pitch_joint
+  - leg_l1_joint
+  - leg_r1_joint
+  - l_shoulder_roll_joint
+  - r_shoulder_roll_joint
+  - leg_l2_joint
+  - leg_r2_joint
+  - l_shoulder_yaw_joint
+  - r_shoulder_yaw_joint
+  - leg_l3_joint
+  - leg_r3_joint
+  - l_arm_pitch_joint
+  - r_arm_pitch_joint
+  - leg_l4_joint
+  - leg_r4_joint
+  - leg_l5_joint
+  - leg_r5_joint
 
 
 # Names of the key bodies that will be used in further processing
 # Must match the names in the lab robot model
 # Order matters and should align with that used in observation
 lab_key_body_names:
-  - left_ankle_roll_link
-  - right_ankle_roll_link
-  - left_wrist_yaw_link
-  - right_wrist_yaw_link
-  - left_shoulder_roll_link
-  - right_shoulder_roll_link
+  - leg_l5_link
+  - leg_r5_link
+  
+  - l_arm_pitch_link
+  - r_arm_pitch_link
+  
+  - l_shoulder_roll_link
+  - r_shoulder_roll_link
+
+
+
+
+# - loin_yaw_joint
+# - l_shoulder_pitch_joint
+# - r_shoulder_pitch_joint
+# - leg_l1_joint
+# - leg_r1_joint
+# - l_shoulder_roll_joint
+# - r_shoulder_roll_joint
+# - leg_l2_joint
+# - leg_r2_joint
+# - l_shoulder_yaw_joint
+# - r_shoulder_yaw_joint
+# - leg_l3_joint
+# - leg_r3_joint
+# - l_arm_pitch_joint
+# - r_arm_pitch_joint
+# - leg_l4_joint
+# - leg_r4_joint
+# - leg_l5_joint
+# - leg_r5_joint
+# Body: base_link, Mass: 4.767899990081787 kg
+# Body: loin_yaw_Link, Mass: 1.2992000579833984 kg
+# Body: l_shoulder_pitch_link, Mass: 0.35120001435279846 kg
+# Body: r_shoulder_pitch_link, Mass: 0.35120001435279846 kg
+# Body: leg_l1_link, Mass: 0.5188999772071838 kg
+# Body: leg_r1_link, Mass: 0.5188999772071838 kg
+# Body: l_shoulder_roll_link, Mass: 0.12999999523162842 kg
+# Body: r_shoulder_roll_link, Mass: 0.12999999523162842 kg
+# Body: leg_l2_link, Mass: 0.1429000049829483 kg
+# Body: leg_r2_link, Mass: 0.1429000049829483 kg
+# Body: l_shoulder_yaw_link, Mass: 0.5600000023841858 kg
+# Body: r_shoulder_yaw_link, Mass: 0.5600000023841858 kg
+# Body: leg_l3_link, Mass: 0.9821000099182129 kg
+# Body: leg_r3_link, Mass: 0.9821000099182129 kg
+# Body: l_arm_pitch_link, Mass: 0.09560000151395798 kg
+# Body: r_arm_pitch_link, Mass: 0.09560000151395798 kg
+# Body: leg_l4_link, Mass: 0.5069000124931335 kg
+# Body: leg_r4_link, Mass: 0.5069000124931335 kg
+# Body: leg_l5_link, Mass: 0.24719998240470886 kg
+# Body: leg_r5_link, Mass: 0.24719998240470886 kg
