@@ -179,6 +179,13 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
         super().__post_init__()
         
         self.scene.robot = qingyun_z1_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        
+        # Override contact sensor configuration for qingyun_z1 foot links
+        self.scene.contact_forces = ContactSensorCfg(
+            prim_path="{ENV_REGEX_NS}/Robot/leg_.*5_link",
+            history_length=3,
+            track_air_time=True,
+        )
 
         # ------------------------------------------------------
         # motion data
