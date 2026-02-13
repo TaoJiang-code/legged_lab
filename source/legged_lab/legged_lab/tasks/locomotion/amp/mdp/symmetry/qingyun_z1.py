@@ -89,7 +89,7 @@ def _transform_policy_obs_left_right(env: ManagerBasedRLEnv, obs: torch.Tensor) 
     # copy observation tensor
     obs = obs.clone()
     device = obs.device
-    joint_num = 29 # G1 29dof
+    joint_num = 19 # qingyun_z1 19dof
     key_body_num = 6
 
     # policy_obs_term_dim = env.observation_manager.group_obs_term_dim["policy"]
@@ -123,22 +123,22 @@ def _transform_policy_obs_left_right(env: ManagerBasedRLEnv, obs: torch.Tensor) 
     for h in range(HISTORY_LEN):
         start_idx = end_idx
         end_idx = start_idx + JOINT_POS_DIM
-        obs[:, start_idx:end_idx] = _switch_g1_29dof_joints_left_right(obs[:, start_idx:end_idx])
+        obs[:, start_idx:end_idx] = _switch_qingyun_z1_joints_left_right(obs[:, start_idx:end_idx])
     # joint vel
     for h in range(HISTORY_LEN):
         start_idx = end_idx
         end_idx = start_idx + JOINT_VEL_DIM
-        obs[:, start_idx:end_idx] = _switch_g1_29dof_joints_left_right(obs[:, start_idx:end_idx])
+        obs[:, start_idx:end_idx] = _switch_qingyun_z1_joints_left_right(obs[:, start_idx:end_idx])
     # last actions
     for h in range(HISTORY_LEN):
         start_idx = end_idx
         end_idx = start_idx + LAST_ACTIONS_DIM
-        obs[:, start_idx:end_idx] = _switch_g1_29dof_joints_left_right(obs[:, start_idx:end_idx])
+        obs[:, start_idx:end_idx] = _switch_qingyun_z1_joints_left_right(obs[:, start_idx:end_idx])
     # key body pos
     for h in range(HISTORY_LEN):
         start_idx = end_idx
         end_idx = start_idx + KEY_BODY_POS_DIM
-        obs[:, start_idx:end_idx] = _switch_g1_29dof_key_body_pos_left_right(obs[:, start_idx:end_idx])
+        obs[:, start_idx:end_idx] = _switch_qingyun_z1_key_body_pos_left_right(obs[:, start_idx:end_idx])
     
     return obs
 
@@ -163,81 +163,63 @@ def _transform_actions_left_right(actions: torch.Tensor) -> torch.Tensor:
         The transformed actions tensor with left-right symmetry applied.
     """
     actions = actions.clone()
-    actions[:] = _switch_g1_29dof_joints_left_right(actions[:])
+    actions[:] = _switch_qingyun_z1_joints_left_right(actions[:])
     return actions
 
 
 
 """
 Lab joint names:
- 0 - left_hip_pitch_joint
- 1 - right_hip_pitch_joint
- 2 - waist_yaw_joint
- 3 - left_hip_roll_joint
- 4 - right_hip_roll_joint
- 5 - waist_roll_joint
- 6 - left_hip_yaw_joint
- 7 - right_hip_yaw_joint
- 8 - waist_pitch_joint
- 9 - left_knee_joint
-10 - right_knee_joint
-11 - left_shoulder_pitch_joint
-12 - right_shoulder_pitch_joint
-13 - left_ankle_pitch_joint
-14 - right_ankle_pitch_joint
-15 - left_shoulder_roll_joint
-16 - right_shoulder_roll_joint
-17 - left_ankle_roll_joint
-18 - right_ankle_roll_joint
-19 - left_shoulder_yaw_joint
-20 - right_shoulder_yaw_joint
-21 - left_elbow_joint
-22 - right_elbow_joint
-23 - left_wrist_roll_joint
-24 - right_wrist_roll_joint
-25 - left_wrist_pitch_joint
-26 - right_wrist_pitch_joint
-27 - left_wrist_yaw_joint
-28 - right_wrist_yaw_joint
-
-
+ 0- loin_yaw_joint
+ 1- l_shoulder_pitch_joint
+ 2- r_shoulder_pitch_joint
+ 3- leg_l1_joint
+ 4- leg_r1_joint
+ 5- l_shoulder_roll_joint
+ 6- r_shoulder_roll_joint
+ 7- leg_l2_joint
+ 8- leg_r2_joint
+ 9- l_shoulder_yaw_joint
+10- r_shoulder_yaw_joint
+11- leg_l3_joint
+12- leg_r3_joint
+13- l_arm_pitch_joint
+14- r_arm_pitch_joint
+15- leg_l4_joint
+16- leg_r4_joint
+17- leg_l5_joint
+18- leg_r5_joint
 
 左侧关节 → 右侧关节 交换:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 0 left_hip_pitch      ↔  1 right_hip_pitch
- 3 left_hip_roll       ↔  4 right_hip_roll
-#  6 left_hip_yaw        ↔  7 right_hip_yaw
- 9 left_knee           ↔ 10 right_knee
-11 left_shoulder_pitch ↔ 12 right_shoulder_pitch
-13 left_ankle_pitch    ↔ 14 right_ankle_pitch
-15 left_shoulder_roll  ↔ 16 right_shoulder_roll
-17 left_ankle_roll     ↔ 18 right_ankle_roll
-# 19 left_shoulder_yaw   ↔ 20 right_shoulder_yaw
-21 left_elbow          ↔ 22 right_elbow
-23 left_wrist_roll     ↔ 24 right_wrist_roll
-25 left_wrist_pitch    ↔ 26 right_wrist_pitch
-# 27 left_wrist_yaw      ↔ 28 right_wrist_yaw
+ 1- l_shoulder_pitch_joint ↔   2- r_shoulder_pitch_joint
+ 3- leg_l1_joint           ↔   4- leg_r1_joint
+ 5- l_shoulder_roll_joint  ↔   6- r_shoulder_roll_joint
+ 7- leg_l2_joint           ↔   8- leg_r2_joint
+# 9- l_shoulder_yaw_joint    ↔   10- r_shoulder_yaw_joint
+# 11- leg_l3_joint           ↔   12- leg_r3_joint
+13- l_arm_pitch_joint      ↔   14- r_arm_pitch_joint
+15- leg_l4_joint           ↔   16- leg_r4_joint
+17- leg_l5_joint           ↔   18- leg_r5_joint
 
 中间关节（不交换）:
- 2 waist_yaw
- 5 waist_roll
- 8 waist_pitch
+ 0- loin_yaw_joint
 """
 
-def _switch_g1_29dof_joints_left_right(joint_data: torch.Tensor) -> torch.Tensor:
+def _switch_qingyun_z1_joints_left_right(joint_data: torch.Tensor) -> torch.Tensor:
     """Applies a left-right symmetry transformation to the joint data tensor."""
     joint_data_switched = torch.zeros_like(joint_data)
     
     # Indices for left and right joints
-    left_indices = [0, 3, 6, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]
-    right_indices = [1, 4, 7, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+    left_indices = [1, 3, 5, 7, 9, 11, 13, 15, 17]
+    right_indices = [2, 4, 6, 8, 10, 12, 14, 16, 18]
     
     # Indices for roll and yaw joints that need sign flipping
-    roll_indices = [3, 4, 15, 16, 17, 18, 23, 24]
-    yaw_indices = [6, 7, 19, 20, 27, 28]
+    roll_indices = [5,6,7,8]
+    yaw_indices = [9,10,11,12]
 
     # Copy non-symmetric joints first (waist joints)
-    joint_data_switched[..., [2, 5, 8]] = joint_data[..., [2, 5, 8]]
+    joint_data_switched[..., [0]] = joint_data[..., [0]]
 
     # Swap left and right joints
     joint_data_switched[..., left_indices] = joint_data[..., right_indices]
@@ -248,12 +230,12 @@ def _switch_g1_29dof_joints_left_right(joint_data: torch.Tensor) -> torch.Tensor
     joint_data_switched[..., yaw_indices] *= -1.0
     
     # Flip the sign of waist_yaw, waist_roll
-    joint_data_switched[..., [2, 5]] *= -1.0
+    joint_data_switched[..., [0]] *= -1.0
     
     return joint_data_switched
 
 
-def _switch_g1_29dof_key_body_pos_left_right(key_body_pos: torch.Tensor) -> torch.Tensor:
+def _switch_qingyun_z1_key_body_pos_left_right(key_body_pos: torch.Tensor) -> torch.Tensor:
     """Applies a left-right symmetry transformation to the key body positions tensor."""
     
     # We assume that the key body are in pair, for example:
@@ -264,6 +246,15 @@ def _switch_g1_29dof_key_body_pos_left_right(key_body_pos: torch.Tensor) -> torc
     # "left_shoulder_roll_link",
     # "right_shoulder_roll_link",
     
+    #leg_l5_link
+    #leg_r5_link
+    
+    #l_arm_pitch_link
+    #r_arm_pitch_link
+    
+    #l_shoulder_roll_link
+    #r_shoulder_roll_link
+
     key_body_pos_switched = key_body_pos.clone()
     num_key_bodies = key_body_pos.shape[-1] // 3
     
@@ -275,9 +266,10 @@ def _switch_g1_29dof_key_body_pos_left_right(key_body_pos: torch.Tensor) -> torc
         key_body_pos_switched[..., left_idx * 3 : left_idx * 3 + 3] = key_body_pos[..., right_idx * 3 : right_idx * 3 + 3]
         key_body_pos_switched[..., right_idx * 3 : right_idx * 3 + 3] = key_body_pos[..., left_idx * 3 : left_idx * 3 + 3]
         
-        # Flip the y-coordinate to reflect left-right symmetry
-        key_body_pos_switched[..., left_idx * 3 + 1] *= -1.0
-        key_body_pos_switched[..., right_idx * 3 + 1] *= -1.0
+        if i==2:
+            # Flip the y-coordinate to reflect left-right symmetry
+            key_body_pos_switched[..., left_idx * 3 + 1] *= -1.0
+            key_body_pos_switched[..., right_idx * 3 + 1] *= -1.0
     
     return key_body_pos_switched
     
