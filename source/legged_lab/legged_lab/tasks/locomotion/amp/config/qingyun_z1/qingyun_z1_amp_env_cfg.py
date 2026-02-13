@@ -153,7 +153,7 @@ class qingyun_z1_AmpRewards():
         weight=0.5,
         params={
             "command_name": "base_velocity",
-            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_*5_link"),
+            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_.*5_link"),
             "threshold": 0.4,
         },
     )
@@ -161,8 +161,8 @@ class qingyun_z1_AmpRewards():
         func=mdp.feet_slide,
         weight=-0.1,
         params={
-            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_*5_link"),
-            "asset_cfg": SceneEntityCfg("robot", body_names="leg_*5_link"),
+            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_.*5_link"),
+            "asset_cfg": SceneEntityCfg("robot", body_names="leg_.*5_link"),
         },
     )
     
