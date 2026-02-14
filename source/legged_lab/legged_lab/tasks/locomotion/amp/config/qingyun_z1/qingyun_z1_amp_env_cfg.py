@@ -121,29 +121,29 @@ class qingyun_z1_AmpRewards():
             "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
     )
 # 原地不动
-    joint_stationary_waist = RewTerm(
-        func=mdp.joint_deviation,
-        weight=-0.3,
-        params={
-            "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    )
-    joint_stationary_legs = RewTerm(
-        func=mdp.joint_deviation,
-        weight=-0.02,
-        params={
-            "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg(
-                "robot",
-                joint_names=[
-                    "leg_.*1_joint",
-                    "leg_.*2_joint",
-                    "leg_.*4_joint",
-                    "leg_.*5_joint",
-                ],
-            )
-        },
-    )
+    # joint_stationary_waist = RewTerm(
+    #     func=mdp.joint_deviation,
+    #     weight=-0.3,
+    #     params={
+    #         "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
+    # )
+    # joint_stationary_legs = RewTerm(
+    #     func=mdp.joint_deviation,
+    #     weight=-0.02,
+    #     params={
+    #         "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg(
+    #             "robot",
+    #             joint_names=[
+    #                 "leg_.*1_joint",
+    #                 "leg_.*2_joint",
+    #                 "leg_.*4_joint",
+    #                 "leg_.*5_joint",
+    #             ],
+    #         )
+    #     },
+    # )
 
 #=========================================================================================#
     
