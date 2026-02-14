@@ -130,8 +130,7 @@ class qingyun_z1_AmpRewards():
     )
     joint_stationary_legs = RewTerm(
         func=mdp.joint_deviation,
-        # weight=-0.02,
-        weight=-0.2,
+        weight=-0.02,
         params={
             "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
