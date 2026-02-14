@@ -98,7 +98,7 @@ class qingyun_z1_AmpRewards():
         weight=-0.1,
         params={
             # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
+            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint","leg_.*4_joint"])},
     )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
