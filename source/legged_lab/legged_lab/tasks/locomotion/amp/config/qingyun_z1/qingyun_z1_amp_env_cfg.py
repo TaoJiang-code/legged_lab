@@ -101,17 +101,17 @@ class qingyun_z1_AmpRewards():
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
     )
-    # joint_deviation_knee = RewTerm(
-    #     func=mdp.joint_deviation_l1,
-    #     weight=-0.05,
-    #     params={
-    #         # "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
-    # )
-    joint_deviation_arms = RewTerm(
+    joint_deviation_knee = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.05,
-        # weight=-0.1,
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
+    )
+    joint_deviation_arms = RewTerm(
+        func=mdp.joint_deviation_l1,
+        # weight=-0.05,
+        weight=-0.07,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
