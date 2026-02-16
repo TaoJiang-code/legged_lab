@@ -219,4 +219,4 @@ if __name__ == "__main__":
 
 # python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-G1-combat_stance-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/g1_amp/2026-02-05_09-06-45/model_33600.pt
 
-# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-qingyun_z1-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/qingyun_z1_amp/2026-02-16_11-13-51/model_2200.pt
+# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-qingyun_z1-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/qingyun_z1_amp/2026-02-16_12-05-16/model_2800.pt

@@ -198,7 +198,8 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
             LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
-            "walk1_subject1": 1.0,
+            "walk1_subject1_walk1": 1.0,
+            "walk1_subject1_walk2": 1.0,
         }
 
         # ------------------------------------------------------
