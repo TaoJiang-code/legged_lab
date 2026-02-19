@@ -135,8 +135,8 @@ class elf3_lite_AmpRewards():
 #=========================================================================================#
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
-        # weight=0.5,
-        weight=0.7,
+        weight=0.5,
+        # weight=0.7,
         params={
             "command_name": "base_velocity",
             # "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_ankle_roll_link"),
@@ -254,7 +254,7 @@ class elf3_lite_AmpEnvCfg(LocomotionAmpEnvCfg):
         # self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 3.0)
         # self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         # self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
-        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 2.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
