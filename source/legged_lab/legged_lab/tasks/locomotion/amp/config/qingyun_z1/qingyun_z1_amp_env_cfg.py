@@ -267,7 +267,7 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
@@ -293,10 +293,24 @@ class qingyun_z1_AmpEnvCfg_PLAY(qingyun_z1_AmpEnvCfg):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (0.5, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)
         
         self.events.reset_from_ref = None
 
+@configclass
+class qingyun_z1_Woposestimation(qingyun_z1_AmpEnvCfg):
+    
+    def __post_init__(self):
+        super().__post_init__()
+        self.observations.policy.key_body_pos_b = None
+
+@configclass
+class qingyun_z1_Woposestimation_PLAY(qingyun_z1_AmpEnvCfg_PLAY):
+    
+    def __post_init__(self):
+        super().__post_init__()
+        self.observations.policy.key_body_pos_b = None
+        
