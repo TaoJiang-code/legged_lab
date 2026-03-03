@@ -45,7 +45,7 @@ class qingyun_z1_AmpRewards():
     """Reward terms for the MDP."""
     # -- task
     track_lin_vel_xy_exp = RewTerm(
-        func=mdp.track_lin_vel_xy_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
+        func=mdp.track_lin_vel_xy_exp, weight=1.2, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
     )
     track_ang_vel_z_exp = RewTerm(
         func=mdp.track_ang_vel_z_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
@@ -131,29 +131,29 @@ class qingyun_z1_AmpRewards():
             "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
     )
 # 原地不动
-    # joint_stationary_waist = RewTerm(
-    #     func=mdp.joint_deviation,
-    #     weight=-0.3,
-    #     params={
-    #         "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    # )
-    # joint_stationary_legs = RewTerm(
-    #     func=mdp.joint_deviation,
-    #     weight=-0.02,
-    #     params={
-    #         "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg(
-    #             "robot",
-    #             joint_names=[
-    #                 "leg_.*1_joint",
-    #                 "leg_.*2_joint",
-    #                 "leg_.*4_joint",
-    #                 "leg_.*5_joint",
-    #             ],
-    #         )
-    #     },
-    # )
+    joint_stationary_waist = RewTerm(
+        func=mdp.joint_deviation,
+        weight=-0.3,
+        params={
+            "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
+    )
+    joint_stationary_legs = RewTerm(
+        func=mdp.joint_deviation,
+        weight=-0.02,
+        params={
+            "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg(
+                "robot",
+                joint_names=[
+                    "leg_.*1_joint",
+                    "leg_.*2_joint",
+                    "leg_.*4_joint",
+                    "leg_.*5_joint",
+                ],
+            )
+        },
+    )
 
 #=========================================================================================#
     
