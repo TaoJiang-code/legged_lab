@@ -159,7 +159,7 @@ class qingyun_z1_AmpRewards():
 #=========================================================================================#
     velocity_direction_penalty = RewTerm(
         func=mdp.velocity_direction_penalty,
-        weight=-0.1,
+        weight=-0.3,
         params={
             "command_name": "base_velocity"
         },
