@@ -54,3 +54,32 @@ def joint_deviation(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneE
     ) < 0.1
     neg_x_flag = (env.command_manager.get_command(command_name)[:, 0] >= 0)
     return torch.sum(torch.abs(angle), dim=1) * zero_flag * neg_x_flag
+
+def velocity_direction_penalty(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """Penalize deviation between actual velocity direction and commanded velocity direction.
+
+    Only considers direction, not magnitude. The larger the angular difference, the higher the penalty.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    command = env.command_manager.get_command(command_name)
+
+    # Get actual base velocity in world frame (xy plane)
+    actual_vel = asset.data.root_lin_vel_w[:, :2]  # shape: (N, 2)
+    # Get commanded velocity (xy plane)
+    command_vel = command[:, :2]  # shape: (N, 2)
+
+    # Normalize velocities to get direction vectors
+    actual_vel_norm = torch.nn.functional.normalize(actual_vel, dim=1, eps=1e-6)
+    command_vel_norm = torch.nn.functional.normalize(command_vel, dim=1, eps=1e-6)
+
+    # Compute cosine similarity (dot product of normalized vectors)
+    # cos_sim = 1 means same direction, -1 means opposite direction
+    cos_sim = torch.sum(actual_vel_norm * command_vel_norm, dim=1)
+
+    # Convert to penalty: (1 - cos_sim) ranges from 0 (same direction) to 2 (opposite direction)
+    # Only penalize when command velocity is non-negligible
+    command_magnitude = torch.norm(command_vel, dim=1)
+    # penalty = (1.0 - cos_sim) * (command_magnitude > 0.1)
+    penalty = 1.0 - cos_sim  # 始终惩罚
+
+    return penalty 

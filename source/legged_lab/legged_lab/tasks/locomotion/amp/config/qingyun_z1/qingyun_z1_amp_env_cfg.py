@@ -45,7 +45,7 @@ class qingyun_z1_AmpRewards():
     """Reward terms for the MDP."""
     # -- task
     track_lin_vel_xy_exp = RewTerm(
-        func=mdp.track_lin_vel_xy_exp, weight=2.3, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
+        func=mdp.track_lin_vel_xy_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
     )
     track_ang_vel_z_exp = RewTerm(
         func=mdp.track_ang_vel_z_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
@@ -157,7 +157,11 @@ class qingyun_z1_AmpRewards():
     )
 
 #=========================================================================================#
-    
+    velocity_direction_penalty = RewTerm(
+        func=mdp.velocity_direction_penalty,
+        weight=-0.1,
+    )
+
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
         weight=0.5,
