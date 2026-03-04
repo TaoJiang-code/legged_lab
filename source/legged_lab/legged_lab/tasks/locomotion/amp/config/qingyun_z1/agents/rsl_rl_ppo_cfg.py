@@ -63,7 +63,7 @@ class qingyun_z1_RslRlOnPolicyRunnerAmpCfg(RslRlOnPolicyRunnerCfg):
             amp_discriminator=RslRlAmpCfg.AMPDiscriminatorCfg(
                 hidden_dims=[1024, 512],
                 activation="elu",
-                style_reward_scale=5.0,
+                style_reward_scale=6.0,
                 # style_reward_scale=7.0,
                 # task_style_lerp=0.4,
                 task_style_lerp=0.6
