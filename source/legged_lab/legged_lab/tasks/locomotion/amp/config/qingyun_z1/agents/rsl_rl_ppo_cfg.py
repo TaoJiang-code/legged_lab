@@ -66,7 +66,7 @@ class qingyun_z1_RslRlOnPolicyRunnerAmpCfg(RslRlOnPolicyRunnerCfg):
                 style_reward_scale=5.0,
                 # style_reward_scale=7.0,
                 # task_style_lerp=0.4,
-                task_style_lerp=0.5
+                task_style_lerp=0.6
             ),
             loss_type="LSGAN"
         ),
