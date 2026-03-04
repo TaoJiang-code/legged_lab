@@ -53,8 +53,8 @@ class qingyun_z1_AmpRewards():
 
     # -- penalties
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-1.0)
-    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.2)
-    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.6)
+    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.2)
+    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.6)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.7)
     ang_vel_xy_l2 = RewTerm(func=mdp.ang_vel_xy_l2, weight=-0.05)
     dof_torques_l2 = RewTerm(func=mdp.joint_torques_l2, weight=-2.0e-6)
@@ -157,13 +157,13 @@ class qingyun_z1_AmpRewards():
     )
 
 #=========================================================================================#
-    velocity_direction_penalty = RewTerm(
-        func=mdp.velocity_direction_penalty,
-        weight=-0.4,
-        params={
-            "command_name": "base_velocity"
-        },
-    )
+    # velocity_direction_penalty = RewTerm(
+    #     func=mdp.velocity_direction_penalty,
+    #     weight=-0.4,
+    #     params={
+    #         "command_name": "base_velocity"
+    #     },
+    # )
 
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
@@ -185,29 +185,11 @@ class qingyun_z1_AmpRewards():
     
     termination_penalty = RewTerm(func=mdp.is_terminated, weight=-200.0)
 
-# @configclass
-# class qingyun_z1_CommandsCfg:
-#     """Command specifications for the MDP."""
-
-#     base_velocity = mdp.UniformVelocityCommandCfg(
-#         asset_name="robot",
-#         resampling_time_range=(10.0, 10.0),
-#         rel_standing_envs=0.02,
-#         rel_heading_envs=1.0,
-#         heading_command=True,
-#         heading_control_stiffness=0.5,
-#         debug_vis=True,
-#         ranges=mdp.UniformVelocityCommandCfg.Ranges(
-#             lin_vel_x=(-0.1, 0.1), lin_vel_y=(-0.1, 0.1), ang_vel_z=(-0.1, 0.1), heading=(-math.pi, math.pi)
-#         ),
-#     )
-
 @configclass
 class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
     """Configuration for the qingyun_z1 AMP environment."""
     
     rewards: qingyun_z1_AmpRewards = qingyun_z1_AmpRewards()
-    # commands: qingyun_z1_CommandsCfg = qingyun_z1_CommandsCfg()
     
     def __post_init__(self):
         super().__post_init__()
@@ -223,8 +205,9 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
             LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
-            "walk1_subject1_walk1": 1.0,
-            "walk1_subject1_walk2": 1.0,
+            # "walk1_subject1_walk1": 1.0,
+            # "walk1_subject1_walk2": 1.0,
+            "1_walk1_subject5": 1.0,
         }
 
         # ------------------------------------------------------
