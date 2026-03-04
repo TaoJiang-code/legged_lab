@@ -159,7 +159,7 @@ class qingyun_z1_AmpRewards():
 #=========================================================================================#
     velocity_direction_penalty = RewTerm(
         func=mdp.velocity_direction_penalty,
-        weight=-0.5,
+        weight=-0.4,
         params={
             "command_name": "base_velocity"
         },
@@ -185,12 +185,29 @@ class qingyun_z1_AmpRewards():
     
     termination_penalty = RewTerm(func=mdp.is_terminated, weight=-200.0)
 
+# @configclass
+# class qingyun_z1_CommandsCfg:
+#     """Command specifications for the MDP."""
+
+#     base_velocity = mdp.UniformVelocityCommandCfg(
+#         asset_name="robot",
+#         resampling_time_range=(10.0, 10.0),
+#         rel_standing_envs=0.02,
+#         rel_heading_envs=1.0,
+#         heading_command=True,
+#         heading_control_stiffness=0.5,
+#         debug_vis=True,
+#         ranges=mdp.UniformVelocityCommandCfg.Ranges(
+#             lin_vel_x=(-0.1, 0.1), lin_vel_y=(-0.1, 0.1), ang_vel_z=(-0.1, 0.1), heading=(-math.pi, math.pi)
+#         ),
+#     )
 
 @configclass
 class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
     """Configuration for the qingyun_z1 AMP environment."""
     
     rewards: qingyun_z1_AmpRewards = qingyun_z1_AmpRewards()
+    # commands: qingyun_z1_CommandsCfg = qingyun_z1_CommandsCfg()
     
     def __post_init__(self):
         super().__post_init__()
