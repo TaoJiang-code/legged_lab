@@ -93,68 +93,68 @@ class qingyun_z1_AmpRewards():
     #     params={"asset_cfg": SceneEntityCfg("robot", joint_names="waist_.*_joint")},
     # )
 #=========================================================================================#
- #修改
-    joint_deviation_hip = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.1,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
-    )
-    joint_deviation_knee = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.02,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
-    )
-    joint_deviation_arms = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.05,
-        # weight=-0.07,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg(
-                "robot",
-                joint_names=[
-                    ".*_shoulder_.*_joint",
-                    ".*_arm_pitch_joint",
-                ],
-            )
-        },
-    )
-    joint_deviation_waist = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.1,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    )
-# 原地不动
-    joint_stationary_waist = RewTerm(
-        func=mdp.joint_deviation,
-        weight=-0.3,
-        params={
-            "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    )
-    joint_stationary_legs = RewTerm(
-        func=mdp.joint_deviation,
-        weight=-0.02,
-        params={
-            "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg(
-                "robot",
-                joint_names=[
-                    "leg_.*1_joint",
-                    "leg_.*2_joint",
-                    "leg_.*3_joint",
-                    "leg_.*4_joint",
-                    "leg_.*5_joint",
-                ],
-            )
-        },
-    )
+#  #修改
+#     joint_deviation_hip = RewTerm(
+#         func=mdp.joint_deviation_l1,
+#         weight=-0.1,
+#         params={
+#             # "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
+#     )
+#     joint_deviation_knee = RewTerm(
+#         func=mdp.joint_deviation_l1,
+#         weight=-0.02,
+#         params={
+#             # "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
+#     )
+#     joint_deviation_arms = RewTerm(
+#         func=mdp.joint_deviation_l1,
+#         weight=-0.05,
+#         # weight=-0.07,
+#         params={
+#             # "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg(
+#                 "robot",
+#                 joint_names=[
+#                     ".*_shoulder_.*_joint",
+#                     ".*_arm_pitch_joint",
+#                 ],
+#             )
+#         },
+#     )
+#     joint_deviation_waist = RewTerm(
+#         func=mdp.joint_deviation_l1,
+#         weight=-0.1,
+#         params={
+#             # "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
+#     )
+# # 原地不动
+#     joint_stationary_waist = RewTerm(
+#         func=mdp.joint_deviation,
+#         weight=-0.3,
+#         params={
+#             "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
+#     )
+#     joint_stationary_legs = RewTerm(
+#         func=mdp.joint_deviation,
+#         weight=-0.02,
+#         params={
+#             "command_name": "base_velocity",
+#             "asset_cfg": SceneEntityCfg(
+#                 "robot",
+#                 joint_names=[
+#                     "leg_.*1_joint",
+#                     "leg_.*2_joint",
+#                     "leg_.*3_joint",
+#                     "leg_.*4_joint",
+#                     "leg_.*5_joint",
+#                 ],
+#             )
+#         },
+#     )
 
 #=========================================================================================#
     # velocity_direction_penalty = RewTerm(
