@@ -110,8 +110,8 @@ class qingyun_z1_AmpRewards():
     # )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
-        weight=-0.05,
-        # weight=-0.07,
+        # weight=-0.05,
+        weight=-0.07,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
@@ -123,13 +123,13 @@ class qingyun_z1_AmpRewards():
             )
         },
     )
-    joint_deviation_waist = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.1,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    )
+    # joint_deviation_waist = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.1,
+    #     params={
+    #         # "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
+    # )
 # # 原地不动
 #     joint_stationary_waist = RewTerm(
 #         func=mdp.joint_deviation,
