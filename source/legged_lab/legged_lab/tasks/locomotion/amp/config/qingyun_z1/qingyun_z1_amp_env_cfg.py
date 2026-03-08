@@ -53,8 +53,8 @@ class qingyun_z1_AmpRewards():
 
     # -- penalties
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-1.0)
-    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
-    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.6)
+    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
+    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.4)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.7)
     ang_vel_xy_l2 = RewTerm(func=mdp.ang_vel_xy_l2, weight=-0.05)
     dof_torques_l2 = RewTerm(func=mdp.joint_torques_l2, weight=-2.0e-6)
@@ -96,22 +96,29 @@ class qingyun_z1_AmpRewards():
  #修改
     joint_deviation_hip = RewTerm(
         func=mdp.joint_deviation_l1,
-        weight=-0.1,
+        weight=-0.05,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
     )
-    # joint_deviation_knee = RewTerm(
+    # joint_deviation_leg = RewTerm(
     #     func=mdp.joint_deviation_l1,
-    #     weight=-0.02,
+    #     weight=-0.07,
     #     params={
     #         # "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
+    #         "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*3_joint"])},
     # )
+    joint_deviation_knee = RewTerm(
+        func=mdp.joint_deviation_l1,
+        weight=-0.05,
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
+    )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
         # weight=-0.05,
-        weight=-0.07,
+        weight=-0.1,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
@@ -205,8 +212,8 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
             LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
-            # "walk1_subject1_walk1": 1.0,
-            # "walk1_subject1_walk2": 1.0,
+            "walk1_subject1_walk1": 1.0,
+            "walk1_subject1_walk2": 1.0,
             "1_walk1_subject5": 1.0,
         }
 
@@ -275,8 +282,8 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
-        self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
+        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
+        self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
         
@@ -301,8 +308,8 @@ class qingyun_z1_AmpEnvCfg_PLAY(qingyun_z1_AmpEnvCfg):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
-        self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
+        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
+        self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)
         
