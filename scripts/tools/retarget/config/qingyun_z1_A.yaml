@@ -1,0 +1,103 @@
+gmr_dof_names:
+  - loin_yaw_joint
+
+  - leg_l1_joint
+  - leg_l2_joint
+  - leg_l3_joint
+  - leg_l4_joint
+  - leg_l5_joint
+
+  - leg_r1_joint
+  - leg_r2_joint
+  - leg_r3_joint
+  - leg_r4_joint
+  - leg_r5_joint
+
+  - l_shoulder_pitch_joint
+  - l_shoulder_roll_joint
+  - l_shoulder_yaw_joint
+  - l_arm_pitch_joint
+
+  - r_shoulder_pitch_joint
+  - r_shoulder_roll_joint
+  - r_shoulder_yaw_joint
+  - r_arm_pitch_joint
+
+
+lab_dof_names:
+  - loin_yaw_joint
+  - l_shoulder_pitch_joint
+  - r_shoulder_pitch_joint
+  - leg_l1_joint
+  - leg_r1_joint
+  - l_shoulder_roll_joint
+  - r_shoulder_roll_joint
+  - leg_l2_joint
+  - leg_r2_joint
+  - l_shoulder_yaw_joint
+  - r_shoulder_yaw_joint
+  - leg_l3_joint
+  - leg_r3_joint
+  - l_arm_pitch_joint
+  - r_arm_pitch_joint
+  - leg_l4_joint
+  - leg_r4_joint
+  - leg_l5_joint
+  - leg_r5_joint
+
+
+# Names of the key bodies that will be used in further processing
+# Must match the names in the lab robot model
+# Order matters and should align with that used in observation
+lab_key_body_names:
+  - leg_l5_link
+  - leg_r5_link
+  
+  - l_arm_pitch_link
+  - r_arm_pitch_link
+  
+  - l_shoulder_roll_link
+  - r_shoulder_roll_link
+
+
+# Legged Lab joint names:
+# - lw_shoulder_pitch
+# - rw_shoulder_pitch
+# - w_waist_yaw
+# - lw_arm_roll
+# - rw_arm_roll
+# - lrw_hip_pitch
+# - rw_hip_pitch
+# - lw_forearm_yaw
+# - rw_forearm_yaw
+# - lrw_hip_roll
+# - rw_hip_roll
+# - lrw_hip_yaw
+# - rw_hip_yaw
+# - lrw_knee_pitch
+# - rw_knee_pitch
+# - lrw_foot_pitch
+# - rw_foot_pitch
+# - lrw_foot_roll
+# - rw_foot_roll
+# Body: base_link, Mass: 1.3998010158538818 kg
+# Body: lp_shoulder_pitch, Mass: 0.20385323464870453 kg
+# Body: rp_shoulder_pitch, Mass: 0.20385323464870453 kg
+# Body: p_waist_yaw, Mass: 0.8242155313491821 kg
+# Body: lp_arm_roll, Mass: 0.10494904965162277 kg
+# Body: rp_arm_roll, Mass: 0.10494904965162277 kg
+# Body: lrp_hip_pitch, Mass: 0.272022545337677 kg
+# Body: rp_hip_pitch, Mass: 0.272022545337677 kg
+# Body: lp_forearm_yaw, Mass: 0.05490673705935478 kg
+# Body: rp_forearm_yaw, Mass: 0.05490673705935478 kg
+# Body: lrp_hip_roll, Mass: 0.2306046038866043 kg
+# Body: rp_hip_roll, Mass: 0.2306046038866043 kg
+# Body: lrp_hip_yaw, Mass: 0.33699727058410645 kg
+# Body: rp_hip_yaw, Mass: 0.33699727058410645 kg
+# Body: lrp_knee_pitch, Mass: 0.8535988926887512 kg
+# Body: rp_knee_pitch, Mass: 0.8535988926887512 kg
+# Body: lrp_foot_pitch, Mass: 0.08400003612041473 kg
+# Body: rp_foot_pitch, Mass: 0.08400003612041473 kg
+# Body: lrp_foot_roll, Mass: 0.14827443659305573 kg
+# Body: rp_foot_roll, Mass: 0.14827443659305573 kg
+
