@@ -75,7 +75,7 @@ def base_ang_vel_custom(
 
     # Transform to body frame using body quaternion
     body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]  # (N, 4)
-    body_ang_vel_b = math_utils.quat_rotate_inverse(body_quat, body_ang_vel_w)
+    body_ang_vel_b = math_utils.quat_apply_inverse(body_quat, body_ang_vel_w)
 
     return body_ang_vel_b
 

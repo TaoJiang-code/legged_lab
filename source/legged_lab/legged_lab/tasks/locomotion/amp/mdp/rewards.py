@@ -68,7 +68,7 @@ def flat_orientation_l2_custom(
 
     body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]  # (N, 4)
     gravity_w = robot.data.GRAVITY_VEC_W  # (N, 3)
-    proj_g = math_utils.quat_rotate_inverse(body_quat, gravity_w)  # (N, 3)
+    proj_g = math_utils.quat_apply_inverse(body_quat, gravity_w)  # (N, 3)
 
     return torch.sum(torch.square(proj_g[:, :2]), dim=1)
 
@@ -87,7 +87,7 @@ def bad_orientation_custom(
 
     body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]  # (N, 4)
     gravity_w = robot.data.GRAVITY_VEC_W  # (N, 3)
-    proj_g = math_utils.quat_rotate_inverse(body_quat, gravity_w)  # (N, 3)
+    proj_g = math_utils.quat_apply_inverse(body_quat, gravity_w)  # (N, 3)
 
     return torch.acos(-proj_g[:, 2]).abs() > limit_angle
 
