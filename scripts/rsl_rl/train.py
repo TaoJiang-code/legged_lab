@@ -261,3 +261,6 @@ if __name__ == "__main__":
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1_Woposestimation-v0 --headless --max_iterations 150000 --logger wandb
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1_Woposestimation-v0 --headless --max_iterations 150000 --logger tensorboard
 
+# qingyun_z1_A
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1_A-v0 --headless --max_iterations 150000 --logger wandb
+# python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-qingyun_z1_A-v0 --headless --max_iterations 150000 --logger tensorboard
