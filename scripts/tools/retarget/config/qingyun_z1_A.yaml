@@ -1,63 +1,63 @@
 gmr_dof_names:
-  - loin_yaw_joint
+  - rw_shoulder_pitch
+  - rw_arm_roll
+  - rw_forearm_yaw
+  
+  - lw_shoulder_pitch
+  - lw_arm_roll
+  - lw_forearm_yaw
 
-  - leg_l1_joint
-  - leg_l2_joint
-  - leg_l3_joint
-  - leg_l4_joint
-  - leg_l5_joint
+  - w_waist_yaw
 
-  - leg_r1_joint
-  - leg_r2_joint
-  - leg_r3_joint
-  - leg_r4_joint
-  - leg_r5_joint
+  - rw_hip_pitch
+  - rw_hip_roll
+  - rw_hip_yaw
+  - rw_knee_pitch
+  - rw_foot_pitch
+  - rw_foot_roll
 
-  - l_shoulder_pitch_joint
-  - l_shoulder_roll_joint
-  - l_shoulder_yaw_joint
-  - l_arm_pitch_joint
-
-  - r_shoulder_pitch_joint
-  - r_shoulder_roll_joint
-  - r_shoulder_yaw_joint
-  - r_arm_pitch_joint
+  - lrw_hip_pitch
+  - lrw_hip_roll
+  - lrw_hip_yaw
+  - lrw_knee_pitch
+  - lrw_foot_pitch
+  - lrw_foot_roll
 
 
 lab_dof_names:
-  - loin_yaw_joint
-  - l_shoulder_pitch_joint
-  - r_shoulder_pitch_joint
-  - leg_l1_joint
-  - leg_r1_joint
-  - l_shoulder_roll_joint
-  - r_shoulder_roll_joint
-  - leg_l2_joint
-  - leg_r2_joint
-  - l_shoulder_yaw_joint
-  - r_shoulder_yaw_joint
-  - leg_l3_joint
-  - leg_r3_joint
-  - l_arm_pitch_joint
-  - r_arm_pitch_joint
-  - leg_l4_joint
-  - leg_r4_joint
-  - leg_l5_joint
-  - leg_r5_joint
+  - lw_shoulder_pitch
+  - rw_shoulder_pitch
+  - w_waist_yaw
+  - lw_arm_roll
+  - rw_arm_roll
+  - lrw_hip_pitch
+  - rw_hip_pitch
+  - lw_forearm_yaw
+  - rw_forearm_yaw
+  - lrw_hip_roll
+  - rw_hip_roll
+  - lrw_hip_yaw
+  - rw_hip_yaw
+  - lrw_knee_pitch
+  - rw_knee_pitch
+  - lrw_foot_pitch
+  - rw_foot_pitch
+  - lrw_foot_roll
+  - rw_foot_roll
 
 
 # Names of the key bodies that will be used in further processing
 # Must match the names in the lab robot model
 # Order matters and should align with that used in observation
 lab_key_body_names:
-  - leg_l5_link
-  - leg_r5_link
+  - lrp_foot_roll
+  - rp_foot_roll
   
-  - l_arm_pitch_link
-  - r_arm_pitch_link
+  - lp_forearm_yaw
+  - rp_forearm_yaw
   
-  - l_shoulder_roll_link
-  - r_shoulder_roll_link
+  - lp_arm_roll
+  - rp_arm_roll
 
 
 # Legged Lab joint names:

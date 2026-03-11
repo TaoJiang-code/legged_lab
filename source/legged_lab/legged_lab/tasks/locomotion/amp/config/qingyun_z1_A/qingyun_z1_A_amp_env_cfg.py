@@ -30,18 +30,20 @@ from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG
 from legged_lab.assets.qingyun_z1 import qingyun_z1_CFG
 # The order must align with the retarget config file scripts/tools/retarget/config/g1_29dof.yaml
 KEY_BODY_NAMES = [
-    "leg_l5_link",
-    "leg_r5_link",
-    "l_arm_pitch_link",
-    "r_arm_pitch_link",
-    "l_shoulder_roll_link",
-    "r_shoulder_roll_link",
+    "lrp_foot_roll",
+    "rp_foot_roll",
+    
+    "lp_forearm_yaw",
+    "rp_forearm_yaw",
+    
+    "lp_arm_roll",
+    "rp_arm_roll",
 ] # if changed here and symmetry is enabled, remember to update amp.mdp.symmetry.g1 as well!
 ANIMATION_TERM_NAME = "animation"
 AMP_NUM_STEPS = 4
 
 @configclass
-class qingyun_z1_AmpRewards():
+class qingyun_z1_A_AmpRewards():
     """Reward terms for the MDP."""
     # -- task
     track_lin_vel_xy_exp = RewTerm(
@@ -53,8 +55,8 @@ class qingyun_z1_AmpRewards():
 
     # -- penalties
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-1.0)
-    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
-    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.4)
+    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
+    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.4)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.7)
     ang_vel_xy_l2 = RewTerm(func=mdp.ang_vel_xy_l2, weight=-0.05)
     dof_torques_l2 = RewTerm(func=mdp.joint_torques_l2, weight=-2.0e-6)
@@ -63,7 +65,7 @@ class qingyun_z1_AmpRewards():
     dof_pos_limits = RewTerm(
         func=mdp.joint_pos_limits,
         weight=-1.0,
-        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*5_joint"])},
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*_foot_pitch", ".*_foot_roll"])},
     )
     
 #=========================================================================================#
@@ -99,44 +101,30 @@ class qingyun_z1_AmpRewards():
         weight=-0.05,
         params={
             # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*2_joint", "leg_.*3_joint"])},
-    )
-    # joint_deviation_leg = RewTerm(
-    #     func=mdp.joint_deviation_l1,
-    #     weight=-0.07,
-    #     params={
-    #         # "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*3_joint"])},
-    # )
-    joint_deviation_knee = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.05,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=["leg_.*4_joint"])},
+            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
     )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
-        # weight=-0.05,
-        weight=-0.1,
+        weight=-0.05,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
                 "robot",
                 joint_names=[
-                    ".*_shoulder_.*_joint",
-                    ".*_arm_pitch_joint",
+                    ".*_shoulder_pitch",
+                    ".*_arm_roll",
+                    ".*_forearm_yaw",
                 ],
             )
         },
     )
-    # joint_deviation_waist = RewTerm(
-    #     func=mdp.joint_deviation_l1,
-    #     weight=-0.1,
-    #     params={
-    #         # "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names="loin_yaw_joint")},
-    # )
+    joint_deviation_waist = RewTerm(
+        func=mdp.joint_deviation_l1,
+        weight=-0.1,
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names="w_waist_yaw")},
+    )
 # # 原地不动
 #     joint_stationary_waist = RewTerm(
 #         func=mdp.joint_deviation,
@@ -177,7 +165,7 @@ class qingyun_z1_AmpRewards():
         weight=0.5,
         params={
             "command_name": "base_velocity",
-            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_.*5_link"),
+            "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
             "threshold": 0.4,
         },
     )
@@ -185,18 +173,18 @@ class qingyun_z1_AmpRewards():
         func=mdp.feet_slide,
         weight=-0.1,
         params={
-            "sensor_cfg": SceneEntityCfg("contact_forces", body_names="leg_.*5_link"),
-            "asset_cfg": SceneEntityCfg("robot", body_names="leg_.*5_link"),
+            "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
+            "asset_cfg": SceneEntityCfg("robot", body_names=".*_foot_roll"),
         },
     )
     
     termination_penalty = RewTerm(func=mdp.is_terminated, weight=-200.0)
 
 @configclass
-class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
+class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
     """Configuration for the qingyun_z1 AMP environment."""
     
-    rewards: qingyun_z1_AmpRewards = qingyun_z1_AmpRewards()
+    rewards: qingyun_z1_A_AmpRewards = qingyun_z1_A_AmpRewards()
     
     def __post_init__(self):
         super().__post_init__()
@@ -209,7 +197,7 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
         # motion data
         # ------------------------------------------------------
         self.motion_data.motion_dataset.motion_data_dir = os.path.join(
-            LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1", "amp", "walk_and_run"
+            LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1_A", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
             "walk1_subject1_walk1": 1.0,
@@ -300,7 +288,7 @@ class qingyun_z1_AmpEnvCfg(LocomotionAmpEnvCfg):
 
 
 @configclass
-class qingyun_z1_AmpEnvCfg_PLAY(qingyun_z1_AmpEnvCfg):
+class qingyun_z1_A_AmpEnvCfg_PLAY(qingyun_z1_A_AmpEnvCfg):
     
     def __post_init__(self):
         super().__post_init__()
@@ -315,17 +303,4 @@ class qingyun_z1_AmpEnvCfg_PLAY(qingyun_z1_AmpEnvCfg):
         
         self.events.reset_from_ref = None
 
-@configclass
-class qingyun_z1_Woposestimation(qingyun_z1_AmpEnvCfg):
-    
-    def __post_init__(self):
-        super().__post_init__()
-        self.observations.policy.key_body_pos_b = None
-
-@configclass
-class qingyun_z1_Woposestimation_PLAY(qingyun_z1_AmpEnvCfg_PLAY):
-    
-    def __post_init__(self):
-        super().__post_init__()
-        self.observations.policy.key_body_pos_b = None
         
