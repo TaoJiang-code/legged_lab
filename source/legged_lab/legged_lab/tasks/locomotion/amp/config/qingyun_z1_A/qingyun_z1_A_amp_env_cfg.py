@@ -28,6 +28,7 @@ from legged_lab import LEGGED_LAB_ROOT_DIR
 ##
 from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG
 from legged_lab.assets.qingyun_z1 import qingyun_z1_CFG
+from legged_lab.assets.qingyun_z1_A import qingyun_z1_A_CFG
 # The order must align with the retarget config file scripts/tools/retarget/config/g1_29dof.yaml
 KEY_BODY_NAMES = [
     "lrp_foot_roll",
@@ -189,7 +190,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         
-        self.scene.robot = qingyun_z1_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        self.scene.robot = qingyun_z1_A_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         
         self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot.*", history_length=3, track_air_time=True)
 
