@@ -9,7 +9,7 @@ gym.register(
     entry_point="legged_lab.envs:ManagerBasedAmpEnv",
     disable_env_checker=True,
     kwargs={
-        "env_cfg_entry_point": f"{__name__}.qingyun_z1_amp_env_cfg:qingyun_z1_A_AmpEnvCfg",
+        "env_cfg_entry_point": f"{__name__}.qingyun_z1_A_amp_env_cfg:qingyun_z1_A_AmpEnvCfg",
         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:qingyun_z1_A_RslRlOnPolicyRunnerAmpCfg",
     },
 )
@@ -19,7 +19,7 @@ gym.register(
     entry_point="legged_lab.envs:ManagerBasedAmpEnv",
     disable_env_checker=True,
     kwargs={
-        "env_cfg_entry_point": f"{__name__}.qingyun_z1_amp_env_cfg:qingyun_z1_A_AmpEnvCfg_PLAY",
+        "env_cfg_entry_point": f"{__name__}.qingyun_z1_A_amp_env_cfg:qingyun_z1_A_AmpEnvCfg_PLAY",
         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:qingyun_z1_A_RslRlOnPolicyRunnerAmpCfg",
     },
 )

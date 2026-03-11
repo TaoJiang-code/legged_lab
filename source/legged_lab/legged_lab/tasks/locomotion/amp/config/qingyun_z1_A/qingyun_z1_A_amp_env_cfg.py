@@ -191,7 +191,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         
         self.scene.robot = qingyun_z1_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         
-        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/base_link/.*", history_length=3, track_air_time=True)
+        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot.*", history_length=3, track_air_time=True)
 
         # ------------------------------------------------------
         # motion data
@@ -200,9 +200,9 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
             LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1_A", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
-            "walk1_subject1_walk1": 1.0,
-            "walk1_subject1_walk2": 1.0,
-            "1_walk1_subject5": 1.0,
+            "1_walk1_subject1": 1.0,
+            "1_walk1_subject2": 1.0,
+            "1_walk1_subject3": 1.0,
         }
 
         # ------------------------------------------------------

@@ -235,6 +235,8 @@ if __name__ == "__main__":
 
 
 # tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp
+# tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp --host 0.0.0.0
+
 
 # elf3_lite
 # python scripts/rsl_rl/train.py --task LeggedLab-Isaac-AMP-elf3_lite-v0 --headless --max_iterations 150000 --logger wandb
