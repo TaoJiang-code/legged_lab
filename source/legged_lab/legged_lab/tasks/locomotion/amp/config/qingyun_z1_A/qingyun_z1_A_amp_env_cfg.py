@@ -215,31 +215,55 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         # -----------------------------------------------------
         
         # policy observations
-        
+
+        self.observations.policy.base_ang_vel.func = mdp.base_ang_vel_custom
+        self.observations.policy.base_ang_vel.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
+        self.observations.policy.root_local_rot_tan_norm.func = mdp.root_local_rot_tan_norm_custom
+        self.observations.policy.root_local_rot_tan_norm.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
         self.observations.policy.key_body_pos_b.params = {
             "asset_cfg": SceneEntityCfg(
-                name="robot", 
-                body_names=KEY_BODY_NAMES, 
+                name="robot",
+                body_names=KEY_BODY_NAMES,
                 preserve_order=True
             )
         }
-        
+
         # critic observations
-        
+
+        self.observations.critic.base_ang_vel.func = mdp.base_ang_vel_custom
+        self.observations.critic.base_ang_vel.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
+        self.observations.critic.root_local_rot_tan_norm.func = mdp.root_local_rot_tan_norm_custom
+        self.observations.critic.root_local_rot_tan_norm.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
         self.observations.critic.key_body_pos_b.params = {
             "asset_cfg": SceneEntityCfg(
-                name="robot", 
-                body_names=KEY_BODY_NAMES, 
+                name="robot",
+                body_names=KEY_BODY_NAMES,
                 preserve_order=True
             )
         }
-        
+
         # discriminator observations
-        
+
+        self.observations.disc.base_ang_vel.func = mdp.base_ang_vel_custom
+        self.observations.disc.base_ang_vel.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
+        self.observations.disc.root_local_rot_tan_norm.func = mdp.root_local_rot_tan_norm_custom
+        self.observations.disc.root_local_rot_tan_norm.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
         self.observations.disc.key_body_pos_b.params = {
             "asset_cfg": SceneEntityCfg(
-                name="robot", 
-                body_names=KEY_BODY_NAMES, 
+                name="robot",
+                body_names=KEY_BODY_NAMES,
                 preserve_order=True
             )
         }
@@ -266,7 +290,11 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Rewards
         # ------------------------------------------------------
-        
+        self.rewards.flat_orientation_l2.func = mdp.flat_orientation_l2_custom
+        self.rewards.flat_orientation_l2.params = {
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw")
+        }
+
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
@@ -285,6 +313,11 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         # terminations
         # ------------------------------------------------------
         self.terminations.base_contact = None
+        self.terminations.bad_orientation.func = mdp.bad_orientation_custom
+        self.terminations.bad_orientation.params = {
+            "limit_angle": math.radians(60.0),
+            "body_cfg": SceneEntityCfg("robot", body_names="p_waist_yaw"),
+        }
 
 
 @configclass

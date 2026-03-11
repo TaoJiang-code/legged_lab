@@ -55,6 +55,43 @@ def joint_deviation(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneE
     neg_x_flag = (env.command_manager.get_command(command_name)[:, 0] >= 0)
     return torch.sum(torch.abs(angle), dim=1) * zero_flag * neg_x_flag
 
+def flat_orientation_l2_custom(
+    env: ManagerBasedRLEnv,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    body_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="p_waist_yaw"),
+) -> torch.Tensor:
+    """Penalize non-flat orientation of a specified body using L2 squared kernel.
+
+    Useful when the IMU is mounted on a body other than base_link (e.g. p_waist_yaw).
+    """
+    robot: Articulation = env.scene[asset_cfg.name]
+
+    body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]  # (N, 4)
+    gravity_w = robot.data.GRAVITY_VEC_W  # (N, 3)
+    proj_g = math_utils.quat_rotate_inverse(body_quat, gravity_w)  # (N, 3)
+
+    return torch.sum(torch.square(proj_g[:, :2]), dim=1)
+
+
+def bad_orientation_custom(
+    env: ManagerBasedRLEnv,
+    limit_angle: float,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    body_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="p_waist_yaw"),
+) -> torch.Tensor:
+    """Terminate when a specified body's orientation is too far from upright.
+
+    Useful when the IMU is mounted on a body other than base_link (e.g. p_waist_yaw).
+    """
+    robot: Articulation = env.scene[asset_cfg.name]
+
+    body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]  # (N, 4)
+    gravity_w = robot.data.GRAVITY_VEC_W  # (N, 3)
+    proj_g = math_utils.quat_rotate_inverse(body_quat, gravity_w)  # (N, 3)
+
+    return torch.acos(-proj_g[:, 2]).abs() > limit_angle
+
+
 def velocity_direction_penalty(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     """Penalize deviation between actual velocity direction and commanded velocity direction.
 
