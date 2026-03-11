@@ -200,8 +200,8 @@ if __name__ == '__main__':
 #     --loop clamp
 
 # python scripts/tools/retarget/dataset_retarget.py \
-#     --robot qingyun_z1 \
+#     --robot qingyun_z1_A \
 #     --input_dir temp/gmr_data/ \
 #     --output_dir temp/lab_data/ \
-#     --config_file scripts/tools/retarget/config/qingyun_z1.yaml \
+#     --config_file scripts/tools/retarget/config/qingyun_z1_A.yaml \
 #     --loop clamp
