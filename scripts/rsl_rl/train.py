@@ -235,7 +235,7 @@ if __name__ == "__main__":
 
 
 # tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp
-# tensorboard --logdir legged_lab/logs/rsl_rl/g1_amp --host 0.0.0.0
+# tensorboard --logdir logs/rsl_rl/qingyun_z1_A_amp --host 0.0.0.0
 
 
 # elf3_lite

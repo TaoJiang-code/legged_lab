@@ -156,7 +156,7 @@ def idle_when_commanded(
     asset: Articulation = env.scene[asset_cfg.name]
     
     # Get velocity command (xy components)
-    cmd_xy = env.command_generator.command[:, :2]
+    cmd_xy = env.command_manager.get_command("base_velocity")[:, :2]
     cmd_magnitude = torch.linalg.norm(cmd_xy, dim=-1)
     
     # Get actual root velocity in yaw frame (same as track_lin_vel_xy uses)
