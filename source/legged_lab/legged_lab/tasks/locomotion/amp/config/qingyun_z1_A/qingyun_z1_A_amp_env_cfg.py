@@ -160,6 +160,12 @@ class qingyun_z1_A_AmpRewards():
     #     },
     # )
 
+    idle_penalty = RewTerm(
+        func=mdp.idle_when_commanded,
+        weight=-2.0,
+        params={"cmd_threshold": 0.2, "vel_threshold": 0.1},
+    )
+
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
         weight=0.5,

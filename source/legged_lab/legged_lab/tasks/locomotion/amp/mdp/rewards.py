@@ -120,3 +120,53 @@ def velocity_direction_penalty(env: ManagerBasedRLEnv, command_name: str, asset_
     penalty = 1.0 - cos_sim  # 始终惩罚
 
     return penalty 
+
+def idle_when_commanded(
+    env: ManagerBasedRLEnv,
+    cmd_threshold: float = 0.2,
+    vel_threshold: float = 0.1,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Penalize being idle when a velocity command is given.
+    
+    This reward function detects "lazy standing" behavior where the robot receives
+    a movement command but remains stationary. It returns 1.0 when the robot should
+    be moving but is not, enabling a negative weight penalty.
+    
+    Args:
+        env: Environment instance.
+        cmd_threshold: Minimum command magnitude to be considered "commanded to move".
+            Commands below this threshold are ignored (robot is allowed to stand).
+        vel_threshold: Maximum velocity magnitude to be considered "idle/stationary".
+            If actual velocity is below this, the robot is considered not moving.
+        asset_cfg: Robot configuration.
+    
+    Returns:
+        Tensor of shape (num_envs,) with values:
+        - 1.0 if commanded to move but idle (should be penalized)
+        - 0.0 otherwise (no penalty)
+    
+    Example:
+        idle_penalty = RewTerm(
+            func=mdp.idle_when_commanded,
+            weight=-2.0,
+            params={"cmd_threshold": 0.2, "vel_threshold": 0.1}
+        )
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    
+    # Get velocity command (xy components)
+    cmd_xy = env.command_generator.command[:, :2]
+    cmd_magnitude = torch.linalg.norm(cmd_xy, dim=-1)
+    
+    # Get actual root velocity in yaw frame (same as track_lin_vel_xy uses)
+    vel_yaw = math_utils.quat_apply_inverse(
+        math_utils.yaw_quat(asset.data.root_quat_w), asset.data.root_lin_vel_w[:, :3]
+    )
+    vel_magnitude = torch.linalg.norm(vel_yaw[:, :2], dim=-1)
+    
+    # Detect "commanded but idle" condition
+    is_commanded = cmd_magnitude > cmd_threshold  # Should be moving
+    is_idle = vel_magnitude < vel_threshold       # But not moving
+    
+    return (is_commanded & is_idle).float()
