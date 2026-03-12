@@ -46,15 +46,15 @@ class qingyun_z1_A_AmpRewards():
     """Reward terms for the MDP."""
     # -- task
     track_lin_vel_xy_exp = RewTerm(
-        func=mdp.track_lin_vel_xy_exp, weight=5.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
+        func=mdp.track_lin_vel_xy_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
     )
     track_ang_vel_z_exp = RewTerm(
-        func=mdp.track_ang_vel_z_exp, weight=5.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
+        func=mdp.track_ang_vel_z_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
     )
 
     # -- penalties
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-1.0)
-    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
+    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.4)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.7)
     ang_vel_xy_l2 = RewTerm(func=mdp.ang_vel_xy_l2, weight=-0.05)
@@ -125,6 +125,7 @@ class qingyun_z1_A_AmpRewards():
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names="w_waist_yaw")},
     )
+    
 # # 原地不动
 #     joint_stationary_waist = RewTerm(
 #         func=mdp.joint_deviation,
@@ -166,22 +167,13 @@ class qingyun_z1_A_AmpRewards():
     #     params={"cmd_threshold": 0.2, "vel_threshold": 0.1},
     # )
 
-    # feet_air_time = RewTerm(
-    #     func=mdp.feet_air_time_positive_biped,
-    #     weight=0.5,
-    #     params={
-    #         "command_name": "base_velocity",
-    #         "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
-    #         "threshold": 0.4,
-    #     },
-    # )
-
-    both_feet_contact = RewTerm(
-        func=mdp.both_feet_contact,
-        weight=1.0,
+    feet_air_time = RewTerm(
+        func=mdp.feet_air_time_positive_biped,
+        weight=0.5,
         params={
+            "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
-            "force_threshold": 1.0,
+            "threshold": 0.4,
         },
     )
 
@@ -207,8 +199,8 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         
         self.scene.robot = qingyun_z1_A_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         
-        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
-
+        # self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
+        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=10, track_air_time=True)
         # ------------------------------------------------------
         # motion data
         # ------------------------------------------------------

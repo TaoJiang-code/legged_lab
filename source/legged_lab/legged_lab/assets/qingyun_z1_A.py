@@ -33,7 +33,7 @@ qingyun_z1_A_CFG = qingyun_z1_A_ArticulationCfg(
         ),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        pos=(0.0, 0.0, 0.65),
+        pos=(0.0, 0.0, 0.7),
         joint_pos={
             "w_waist_yaw": 0.0,
 
