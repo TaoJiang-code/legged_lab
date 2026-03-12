@@ -166,16 +166,25 @@ class qingyun_z1_A_AmpRewards():
     #     params={"cmd_threshold": 0.2, "vel_threshold": 0.1},
     # )
 
-    feet_air_time = RewTerm(
-        func=mdp.feet_air_time_positive_biped,
-        # weight=0.5,
-        weight=100.0,
+    # feet_air_time = RewTerm(
+    #     func=mdp.feet_air_time_positive_biped,
+    #     weight=0.5,
+    #     params={
+    #         "command_name": "base_velocity",
+    #         "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
+    #         "threshold": 0.4,
+    #     },
+    # )
+
+    both_feet_contact = RewTerm(
+        func=mdp.both_feet_contact,
+        weight=1.0,
         params={
-            "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
-            "threshold": 0.4,
+            "force_threshold": 1.0,
         },
     )
+
     feet_slide = RewTerm(
         func=mdp.feet_slide,
         weight=-0.1,

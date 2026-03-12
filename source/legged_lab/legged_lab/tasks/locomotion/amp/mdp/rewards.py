@@ -158,6 +158,22 @@ def feet_air_time_positive_biped(env, command_name: str, threshold: float, senso
     reward *= torch.norm(env.command_manager.get_command(command_name)[:, :2], dim=1) > 0.1
     return reward
 
+def both_feet_contact(
+    env,
+    sensor_cfg: SceneEntityCfg,
+    force_threshold: float = 1.0,
+) -> torch.Tensor:
+    """Reward both feet being in contact with the ground.
+
+    Returns 1.0 when both feet have contact force above threshold, 0.0 otherwise.
+    """
+    contact_sensor: ContactSensor = env.scene.sensors[sensor_cfg.name]
+    forces = contact_sensor.data.net_forces_w_history[:, :, sensor_cfg.body_ids, :].norm(dim=-1).max(dim=1)[0]
+    in_contact = forces > force_threshold  # (num_envs, num_feet)
+    both_contact = torch.all(in_contact, dim=1)  # both feet touching
+    return both_contact.float()
+
+
 def idle_when_commanded(
     env: ManagerBasedRLEnv,
     cmd_threshold: float = 0.2,
