@@ -173,8 +173,7 @@ class qingyun_z1_A_AmpRewards():
         params={
             "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
-            # "threshold": 0.4,
-            "threshold": 100.0,
+            "threshold": 0.4,
         },
     )
 

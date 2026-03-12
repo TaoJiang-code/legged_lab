@@ -152,6 +152,8 @@ def feet_air_time_positive_biped(env, command_name: str, threshold: float, senso
     in_contact = contact_time > 0.0
     in_mode_time = torch.where(in_contact, contact_time, air_time)
     single_stance = torch.sum(in_contact.int(), dim=1) == 1
+    if env.common_step_counter % 200 == 0:
+        print(f"[feet] in_contact(env0): left={in_contact[0,0].item()}, right={in_contact[0,1].item()} | single_stance(env0): {single_stance[0].item()}")
     reward = torch.min(torch.where(single_stance.unsqueeze(-1), in_mode_time, 0.0), dim=1)[0]
     reward = torch.clamp(reward, max=threshold)
     # no reward for zero command
