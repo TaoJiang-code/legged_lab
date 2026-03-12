@@ -152,13 +152,56 @@ def feet_air_time_positive_biped(env, command_name: str, threshold: float, senso
     in_contact = contact_time > 0.0
     in_mode_time = torch.where(in_contact, contact_time, air_time)
     single_stance = torch.sum(in_contact.int(), dim=1) == 1
-    if env.common_step_counter % 200 == 0:
-        print(f"[feet] in_contact(env0): left={in_contact[0,0].item()}, right={in_contact[0,1].item()} | single_stance(env0): {single_stance[0].item()}")
+    # if env.common_step_counter % 200 == 0:
+    #     print(f"[feet] in_contact(env0): left={in_contact[0,0].item()}, right={in_contact[0,1].item()} | single_stance(env0): {single_stance[0].item()}")
     reward = torch.min(torch.where(single_stance.unsqueeze(-1), in_mode_time, 0.0), dim=1)[0]
     reward = torch.clamp(reward, max=threshold)
     # no reward for zero command
     reward *= torch.norm(env.command_manager.get_command(command_name)[:, :2], dim=1) > 0.1
     return reward
+
+def feet_height_diff(
+    env: ManagerBasedRLEnv,
+    command_name: str,
+    asset_cfg: SceneEntityCfg,
+    cmd_threshold: float = 0.1,
+) -> torch.Tensor:
+    """Reward height difference between two feet when moving.
+
+    Encourages alternating foot lifting during locomotion.
+    Returns 0 when commanded speed is near zero.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    # feet z position in world frame, shape: (num_envs, 2)
+    feet_z = asset.data.body_pos_w[:, asset_cfg.body_ids, 2]
+    height_diff = torch.abs(feet_z[:, 0] - feet_z[:, 1])
+
+    cmd_speed = torch.linalg.norm(env.command_manager.get_command(command_name)[:, :2], dim=-1)
+    is_moving = cmd_speed > cmd_threshold
+
+    return height_diff * is_moving.float()
+
+def lin_vel_magnitude_l2(
+    env: ManagerBasedRLEnv,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Penalize the difference between commanded and actual speed magnitude (L2).
+
+    Only cares about speed magnitude, not direction.
+    Returns squared difference, use with negative weight.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    cmd_xy = env.command_manager.get_command(command_name)[:, :2]
+    cmd_speed = torch.linalg.norm(cmd_xy, dim=-1)
+
+    vel_yaw = math_utils.quat_apply_inverse(
+        math_utils.yaw_quat(asset.data.root_quat_w), asset.data.root_lin_vel_w[:, :3]
+    )
+    actual_speed = torch.linalg.norm(vel_yaw[:, :2], dim=-1)
+
+    return (cmd_speed - actual_speed) ** 2
+
 
 def both_feet_contact(
     env,
@@ -225,3 +268,4 @@ def idle_when_commanded(
     is_idle = vel_magnitude < vel_threshold       # But not moving
     
     return (is_commanded & is_idle).float()
+
