@@ -125,7 +125,7 @@ class qingyun_z1_A_AmpRewards():
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names="w_waist_yaw")},
     )
-    
+
 # # 原地不动
 #     joint_stationary_waist = RewTerm(
 #         func=mdp.joint_deviation,
@@ -173,7 +173,8 @@ class qingyun_z1_A_AmpRewards():
         params={
             "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
-            "threshold": 0.4,
+            # "threshold": 0.4,
+            "threshold": 1.0,
         },
     )
 
@@ -199,8 +200,8 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         
         self.scene.robot = qingyun_z1_A_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         
-        # self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
-        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=10, track_air_time=True)
+        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
+
         # ------------------------------------------------------
         # motion data
         # ------------------------------------------------------
