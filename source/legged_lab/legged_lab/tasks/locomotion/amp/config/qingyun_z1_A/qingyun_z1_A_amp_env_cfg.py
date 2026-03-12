@@ -199,7 +199,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         
         self.scene.robot = qingyun_z1_A_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         
-        self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
+        # self.scene.contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
 
         # ------------------------------------------------------
         # motion data
