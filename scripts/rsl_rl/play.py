@@ -208,7 +208,6 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # close the simulator
     env.close()
 
-
 if __name__ == "__main__":
     # run the main functionS
     main()

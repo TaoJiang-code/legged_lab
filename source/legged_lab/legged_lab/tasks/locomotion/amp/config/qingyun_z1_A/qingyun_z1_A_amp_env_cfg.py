@@ -26,8 +26,6 @@ from legged_lab import LEGGED_LAB_ROOT_DIR
 ##
 # Pre-defined configs
 ##
-from legged_lab.assets.unitree import UNITREE_G1_29DOF_CFG
-from legged_lab.assets.qingyun_z1 import qingyun_z1_CFG
 from legged_lab.assets.qingyun_z1_A import qingyun_z1_A_CFG
 # The order must align with the retarget config file scripts/tools/retarget/config/g1_29dof.yaml
 KEY_BODY_NAMES = [
@@ -99,7 +97,8 @@ class qingyun_z1_A_AmpRewards():
  #修改
     joint_deviation_hip = RewTerm(
         func=mdp.joint_deviation_l1,
-        weight=-0.05,
+        # weight=-0.05,
+        weight=-0.01,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
