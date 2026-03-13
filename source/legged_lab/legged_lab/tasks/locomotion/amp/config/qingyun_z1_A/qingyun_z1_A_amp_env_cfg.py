@@ -54,7 +54,7 @@ class qingyun_z1_A_AmpRewards():
 
     # -- penalties
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-1.0)
-    # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
+    lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.3)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.4)
     # lin_vel_z_l2 = RewTerm(func=mdp.lin_vel_z_l2, weight=-0.7)
     ang_vel_xy_l2 = RewTerm(func=mdp.ang_vel_xy_l2, weight=-0.05)
@@ -95,14 +95,13 @@ class qingyun_z1_A_AmpRewards():
     # )
 #=========================================================================================#
  #修改
-    # joint_deviation_hip = RewTerm(
-    #     func=mdp.joint_deviation_l1,
-    #     # weight=-0.05,
-    #     weight=-0.01,
-    #     params={
-    #         # "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
-    # )
+    joint_deviation_hip = RewTerm(
+        func=mdp.joint_deviation_l1,
+        weight=-0.05,
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
+    )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.05,
@@ -167,11 +166,11 @@ class qingyun_z1_A_AmpRewards():
     #     params={"cmd_threshold": 0.2, "vel_threshold": 0.1},
     # )
 
-    lin_vel_magnitude_l2 = RewTerm(
-        func=mdp.lin_vel_magnitude_l2,
-        weight=-1.0,
-        params={"command_name": "base_velocity"},
-    )
+    # lin_vel_magnitude_l2 = RewTerm(
+    #     func=mdp.lin_vel_magnitude_l2,
+    #     weight=-1.0,
+    #     params={"command_name": "base_velocity"},
+    # )
 
     # feet_height_diff = RewTerm(
     #     func=mdp.feet_height_diff,
@@ -185,8 +184,8 @@ class qingyun_z1_A_AmpRewards():
 
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
-        # weight=0.5,
-        weight=1.5,
+        weight=0.5,
+        # weight=1.5,
         params={
             "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
@@ -226,7 +225,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         )
         self.motion_data.motion_dataset.motion_data_weights = {
             "1_walk1_subject1": 1.0,
-            "1_walk1_subject2": 1.0,
+            # "1_walk1_subject2": 1.0,
             "1_walk1_subject3": 1.0,
         }
 
