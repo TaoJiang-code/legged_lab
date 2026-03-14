@@ -105,6 +105,7 @@ class qingyun_z1_A_AmpRewards():
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.05,
+        # weight=-0.03,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg(
@@ -185,7 +186,7 @@ class qingyun_z1_A_AmpRewards():
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
         weight=0.5,
-        # weight=1.5,
+        # weight=1.0,
         params={
             "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot_roll"),
@@ -224,9 +225,10 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
             LEGGED_LAB_ROOT_DIR, "data", "MotionData", "qingyun_z1_A", "amp", "walk_and_run"
         )
         self.motion_data.motion_dataset.motion_data_weights = {
-            "1_walk1_subject1": 1.0,
+            # "1_walk1_subject1": 1.0,
             # "1_walk1_subject2": 1.0,
-            "1_walk1_subject3": 1.0,
+            # "1_walk1_subject3": 1.0,
+            "walk1_subject1_walk2":1.0,
         }
 
         # ------------------------------------------------------
@@ -322,7 +324,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
@@ -353,7 +355,7 @@ class qingyun_z1_A_AmpEnvCfg_PLAY(qingyun_z1_A_AmpEnvCfg):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-0.0, 0.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)
