@@ -46,7 +46,7 @@ class qingyun_z1_A_AmpRewards():
     """Reward terms for the MDP."""
     # -- task
     track_lin_vel_xy_exp = RewTerm(
-        func=mdp.track_lin_vel_xy_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
+        func=mdp.track_lin_vel_xy_exp, weight=2.5, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
     )
     track_ang_vel_z_exp = RewTerm(
         func=mdp.track_ang_vel_z_exp, weight=1.0, params={"command_name": "base_velocity", "std": math.sqrt(0.25)}
@@ -95,35 +95,59 @@ class qingyun_z1_A_AmpRewards():
     # )
 #=========================================================================================#
  #修改
-    joint_deviation_hip = RewTerm(
+
+ #关节偏差
+    # joint_deviation_hip = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.05,
+    #     params={
+    #         # "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
+    # )
+    # joint_deviation_arms = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.05,
+    #     # weight=-0.03,
+    #     params={
+    #         # "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg(
+    #             "robot",
+    #             joint_names=[
+    #                 ".*_shoulder_pitch",
+    #                 ".*_arm_roll",
+    #                 ".*_forearm_yaw",
+    #             ],
+    #         )
+    #     },
+    # )
+    # joint_deviation_waist = RewTerm(
+    #     func=mdp.joint_deviation_l1,
+    #     weight=-0.1,
+    #     params={
+    #         # "command_name": "base_velocity",
+    #         "asset_cfg": SceneEntityCfg("robot", joint_names="w_waist_yaw")},
+    # )
+
+    joint_deviation_knee = RewTerm(
+        func=mdp.joint_deviation_l1,
+        weight=-0.07,
+        params={
+            # "command_name": "base_velocity",
+            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_knee_pitch"])},
+    )
+
+    joint_deviation_all = RewTerm(
         func=mdp.joint_deviation_l1,
         weight=-0.05,
         params={
             # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
-    )
-    joint_deviation_arms = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.05,
-        # weight=-0.03,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg(
-                "robot",
-                joint_names=[
-                    ".*_shoulder_pitch",
-                    ".*_arm_roll",
-                    ".*_forearm_yaw",
-                ],
-            )
-        },
-    )
-    joint_deviation_waist = RewTerm(
-        func=mdp.joint_deviation_l1,
-        weight=-0.1,
-        params={
-            # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names="w_waist_yaw")},
+            "asset_cfg": SceneEntityCfg("robot", 
+            joint_names=[
+                ".*_hip_roll", ".*_hip_yaw",
+                ".*_shoulder_pitch", ".*_arm_roll", ".*_forearm_yaw",
+                # ".*_knee_pitch",
+                "w_waist_yaw",
+                ])},
     )
 
 # # 原地不动
@@ -229,6 +253,7 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
             # "1_walk1_subject2": 1.0,
             # "1_walk1_subject3": 1.0,
             "walk1_subject1_walk2":1.0,
+            # "run1_run1_subject5": 1.0,
         }
 
         # ------------------------------------------------------
@@ -324,7 +349,10 @@ class qingyun_z1_A_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
+        # self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
+        # self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
+        # self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-0.5, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
@@ -355,9 +383,9 @@ class qingyun_z1_A_AmpEnvCfg_PLAY(qingyun_z1_A_AmpEnvCfg):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (-0.0, 0.0)
-        self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
-        self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
+        # self.commands.base_velocity.ranges.lin_vel_x = (-0.0, 0.0)
+        # self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
+        # self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)
         
         self.events.reset_from_ref = None
