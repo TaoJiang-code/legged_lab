@@ -34,37 +34,34 @@ lab_dof_names:
   - w_waist_yaw
   - lw_arm_roll
   - rw_arm_roll
-  - lrw_hip_pitch
+  - lw_hip_pitch
   - rw_hip_pitch
-  - lw_forearm_yaw
-  - rw_forearm_yaw
-  - lrw_hip_roll
+  - lw_arm_yaw
+  - rw_arm_yaw
+  - lw_hip_roll
   - rw_hip_roll
-  - lrw_hip_yaw
+  - lw_elbow_pitch
+  - rw_elbow_pitch
+  - lw_hip_yaw
   - rw_hip_yaw
-  - lrw_knee_pitch
+  - lw_knee_pitch
   - rw_knee_pitch
-  - lrw_foot_pitch
+  - lw_foot_pitch
   - rw_foot_pitch
-  - lrw_foot_roll
+  - lw_foot_roll
   - rw_foot_roll
-
-
 # Names of the key bodies that will be used in further processing
 # Must match the names in the lab robot model
 # Order matters and should align with that used in observation
 lab_key_body_names:
-  - lrp_foot_roll
-  - rp_foot_roll
-  
-  - lp_forearm_yaw
-  - rp_forearm_yaw
-  
-  - lp_arm_roll
-  - rp_arm_roll
+  - lp_foot_roll_link
+  - rp_foot_roll_link
 
+  - lp_elbow_pitch_link
+  - rp_elbow_pitch_link
 
-
+  - lp_arm_roll_link
+  - rp_arm_roll_link
 
 # Legged Lab joint names:
 # - lw_shoulder_pitch
