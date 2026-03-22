@@ -66,3 +66,47 @@ lab_key_body_names:
 
 
 
+# Legged Lab joint names:
+# - lw_shoulder_pitch
+# - rw_shoulder_pitch
+# - w_waist_yaw
+# - lw_arm_roll
+# - rw_arm_roll
+# - lw_hip_pitch
+# - rw_hip_pitch
+# - lw_arm_yaw
+# - rw_arm_yaw
+# - lw_hip_roll
+# - rw_hip_roll
+# - lw_elbow_pitch
+# - rw_elbow_pitch
+# - lw_hip_yaw
+# - rw_hip_yaw
+# - lw_knee_pitch
+# - rw_knee_pitch
+# - lw_foot_pitch
+# - rw_foot_pitch
+# - lw_foot_roll
+# - rw_foot_roll
+# Body: base_link, Mass: 2.0959999561309814 kg
+# Body: lp_shoulder_pitch_link, Mass: 0.18456000089645386 kg
+# Body: rp_shoulder_pitch_link, Mass: 0.18456000089645386 kg
+# Body: p_waist_yaw_link, Mass: 0.9706400632858276 kg
+# Body: lp_arm_roll_link, Mass: 0.08210200071334839 kg
+# Body: rp_arm_roll_link, Mass: 0.08210200071334839 kg
+# Body: lp_hip_pitch_link, Mass: 0.3559899926185608 kg
+# Body: rp_hip_pitch_link, Mass: 0.3559899926185608 kg
+# Body: lp_arm_yaw_link, Mass: 0.22625000774860382 kg
+# Body: rw_arm_yaw_link, Mass: 0.22625000774860382 kg
+# Body: lp_hip_roll_link, Mass: 0.1072700023651123 kg
+# Body: rp_hip_roll_link, Mass: 0.1072700023651123 kg
+# Body: lp_elbow_pitch_link, Mass: 0.1074099913239479 kg
+# Body: rp_elbow_pitch_link, Mass: 0.1074099913239479 kg
+# Body: lp_hip_yaw_link, Mass: 0.2792699933052063 kg
+# Body: rp_hip_yaw_link, Mass: 0.2792699933052063 kg
+# Body: lp_knee_pitch_link, Mass: 0.7944400310516357 kg
+# Body: rp_knee_pitch_link, Mass: 0.7944400310516357 kg
+# Body: lp_foot_pitch_link, Mass: 0.013562999665737152 kg
+# Body: rp_foot_pitch_link, Mass: 0.013562999665737152 kg
+# Body: lp_foot_roll_link, Mass: 0.14830000698566437 kg
+# Body: rp_foot_roll_link, Mass: 0.14830000698566437 kg
