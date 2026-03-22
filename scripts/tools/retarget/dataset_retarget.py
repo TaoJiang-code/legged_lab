@@ -84,6 +84,8 @@ elif args_cli.robot == "qingyun_z1":
     from legged_lab.assets.qingyun_z1 import qingyun_z1_CFG as ROBOT_CFG
 elif args_cli.robot == "qingyun_z1_A":
     from legged_lab.assets.qingyun_z1_A import qingyun_z1_A_CFG as ROBOT_CFG
+elif args_cli.robot == "qingyun_z1_A_rev_1_0":
+    from legged_lab.assets.qingyun_z1_A_rev_1_0 import qingyun_z1_A_rev_1_0_CFG as ROBOT_CFG
 else:
     raise ValueError(f"Robot {args_cli.robot} not supported.")
 
@@ -204,4 +206,11 @@ if __name__ == '__main__':
 #     --input_dir temp/gmr_data/ \
 #     --output_dir temp/lab_data/ \
 #     --config_file scripts/tools/retarget/config/qingyun_z1_A.yaml \
+#     --loop clamp
+
+# python scripts/tools/retarget/dataset_retarget.py \
+#     --robot qingyun_z1_A_rev_1_0 \
+#     --input_dir temp/gmr_data/ \
+#     --output_dir temp/lab_data/ \
+#     --config_file scripts/tools/retarget/config/qingyun_z1_A_rev_1_0.yaml \
 #     --loop clamp

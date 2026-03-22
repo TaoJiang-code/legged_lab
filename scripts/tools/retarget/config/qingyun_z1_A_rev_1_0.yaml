@@ -1,0 +1,68 @@
+gmr_dof_names:
+
+  - rw_shoulder_pitch
+  - rw_arm_roll
+  - rw_arm_yaw
+  - rw_elbow_pitch
+
+  - lw_shoulder_pitch
+  - lw_arm_roll
+  - lw_arm_yaw
+  - lw_elbow_pitch
+
+  - w_waist_yaw
+
+  - rw_hip_pitch
+  - rw_hip_roll
+  - rw_hip_yaw
+  - rw_knee_pitch
+  - rw_foot_pitch
+  - rw_foot_roll
+
+  - lw_hip_pitch
+  - lw_hip_roll
+  - lw_hip_yaw
+  - lw_knee_pitch
+  - lw_foot_pitch
+  - lw_foot_roll
+
+
+
+lab_dof_names:
+  - lw_shoulder_pitch
+  - rw_shoulder_pitch
+  - w_waist_yaw
+  - lw_arm_roll
+  - rw_arm_roll
+  - lrw_hip_pitch
+  - rw_hip_pitch
+  - lw_forearm_yaw
+  - rw_forearm_yaw
+  - lrw_hip_roll
+  - rw_hip_roll
+  - lrw_hip_yaw
+  - rw_hip_yaw
+  - lrw_knee_pitch
+  - rw_knee_pitch
+  - lrw_foot_pitch
+  - rw_foot_pitch
+  - lrw_foot_roll
+  - rw_foot_roll
+
+
+# Names of the key bodies that will be used in further processing
+# Must match the names in the lab robot model
+# Order matters and should align with that used in observation
+lab_key_body_names:
+  - lrp_foot_roll
+  - rp_foot_roll
+  
+  - lp_forearm_yaw
+  - rp_forearm_yaw
+  
+  - lp_arm_roll
+  - rp_arm_roll
+
+
+
+
