@@ -360,5 +360,5 @@ if __name__ == "__main__":
 # --mode motion \
 # --spacing 1.5 \
 # --show_markers \
-# --floor_height -0.1 \
+# --floor_height -0.3 \
 # --motion_file temp/lab_data/run1_run1_subject2.pkl
