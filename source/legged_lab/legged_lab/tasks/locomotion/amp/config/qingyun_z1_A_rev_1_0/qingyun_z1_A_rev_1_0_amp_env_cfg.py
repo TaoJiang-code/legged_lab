@@ -223,6 +223,7 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         )
         self.motion_data.motion_dataset.motion_data_weights = {
             "walk1_subject1_walk2":1.0,
+            "run1_run1_subject2":1.0,
         }
 
         # ------------------------------------------------------
@@ -318,7 +319,7 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         # ------------------------------------------------------
         # Commands
         # ------------------------------------------------------
-        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (-math.pi, math.pi)
@@ -349,7 +350,7 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg_PLAY(qingyun_z1_A_rev_1_0_AmpEnvCfg):
         self.scene.num_envs = 48 
         self.scene.env_spacing = 2.5
         
-        self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (-2.0, 3.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-1.0, 1.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
         self.commands.base_velocity.ranges.heading = (0.0, 0.0)

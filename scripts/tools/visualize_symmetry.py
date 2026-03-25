@@ -361,4 +361,4 @@ if __name__ == "__main__":
 # --spacing 1.5 \
 # --show_markers \
 # --floor_height -0.3 \
-# --motion_file temp/lab_data/run1_run1_subject2.pkl
+# --motion_file source/legged_lab/legged_lab/data/MotionData/qingyun_z1_A_rev_1_0/amp/walk_and_run/run1_run1_subject2.pkl
