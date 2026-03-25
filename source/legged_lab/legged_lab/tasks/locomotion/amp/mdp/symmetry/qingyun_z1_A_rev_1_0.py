@@ -93,7 +93,46 @@ def _transform_actions_left_right(actions: torch.Tensor) -> torch.Tensor:
     actions[:] = _switch_joints_left_right(actions[:])
     return actions
 
+"""
+Lab joint names:
+ 0 - lw_shoulder_pitch
+ 1 - rw_shoulder_pitch
+ 2 - w_waist_yaw
+ 3 - lw_arm_roll
+ 4 - rw_arm_roll
+ 5 - lw_hip_pitch
+ 6 - rw_hip_pitch
+ 7 - lw_arm_yaw
+ 8 - rw_arm_yaw
+ 9 - lw_hip_roll
+ 10 - rw_hip_roll
+ 11 - lw_elbow_pitch
+ 12 - rw_elbow_pitch
+ 13 - lw_hip_yaw
+ 14 - rw_hip_yaw
+ 15 - lw_knee_pitch
+ 16 - rw_knee_pitch
+ 17 - lw_foot_pitch
+ 18 - rw_foot_pitch
+ 19 - lw_foot_roll
+ 20 - rw_foot_roll
 
+左侧关节 → 右侧关节 交换:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 0 lw_shoulder_pitch   ↔ 1 rw_shoulder_pitch
+ 3 lw_arm_roll         ↔ 4 rw_arm_roll
+ 5 lw_hip_pitch        ↔ 6 rw_hip_pitch
+ 7 lw_arm_yaw          ↔ 8 rw_arm_yaw
+ 9 lw_hip_roll         ↔ 10 rw_hip_roll
+ 11 lw_elbow_pitch     ↔ 12 rw_elbow_pitch
+ 13 lw_hip_yaw         ↔ 14 rw_hip_yaw
+ 15 lw_knee_pitch      ↔ 16 rw_knee_pitch
+ 17 lw_foot_pitch      ↔ 18 rw_foot_pitch
+ 19 lw_foot_roll       ↔ 20 rw_foot_roll
+
+中间关节（不交换）:
+ 2 w_waist_yaw
+"""
 def _switch_joints_left_right(joint_data: torch.Tensor) -> torch.Tensor:
     """Joint order follows scripts/tools/retarget/config/qingyun_z1_A_rev_1_0.yaml."""
     joint_data_switched = torch.zeros_like(joint_data)
@@ -105,7 +144,7 @@ def _switch_joints_left_right(joint_data: torch.Tensor) -> torch.Tensor:
     joint_data_switched[..., left_indices] = joint_data[..., right_indices]
     joint_data_switched[..., right_indices] = joint_data[..., left_indices]
 
-    roll_indices = [3, 4, 9, 10, 19, 20]
+    roll_indices = [3, 4, 9, 10, 19, 20, 15, 16]
     yaw_indices = [7, 8, 13, 14]
 
     joint_data_switched[..., roll_indices] *= -1.0

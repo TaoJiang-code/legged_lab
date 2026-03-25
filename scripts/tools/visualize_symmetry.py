@@ -33,6 +33,7 @@ parser.add_argument(
 )
 parser.add_argument("--pose_scale", type=float, default=0.2, help="Amplitude of the synthetic asymmetric pose.")
 parser.add_argument("--spacing", type=float, default=1.5, help="Distance between the original and mirrored robots.")
+parser.add_argument("--floor_height", type=float, default=0.0, help="Ground plane height in world Z.")
 parser.add_argument(
     "--show_markers",
     action="store_true",
@@ -140,9 +141,9 @@ def load_motion_data(robot_name: str, motion_file: str | None):
     return motion_path, motion, fps
 
 
-def create_scene(robot_cfg, spacing: float):
+def create_scene(robot_cfg, spacing: float, floor_height: float):
     ground_cfg = sim_utils.GroundPlaneCfg()
-    ground_cfg.func("/World/defaultGroundPlane", ground_cfg)
+    ground_cfg.func("/World/defaultGroundPlane", ground_cfg, translation=(0.0, 0.0, floor_height))
 
     light_cfg = sim_utils.DomeLightCfg(intensity=2500.0, color=(0.8, 0.8, 0.8))
     light_cfg.func("/World/Light", light_cfg)
@@ -236,7 +237,7 @@ def main():
 
     sim = sim_utils.SimulationContext(sim_utils.SimulationCfg(dt=1.0 / fps, device=args_cli.device))
     sim.set_camera_view(eye=[2.8, 2.8, 1.8], target=[0.0, 0.0, 0.9])
-    robot_a, robot_b, origin_a, origin_b = create_scene(robot_cfg, args_cli.spacing)
+    robot_a, robot_b, origin_a, origin_b = create_scene(robot_cfg, args_cli.spacing, args_cli.floor_height)
     marker = build_marker() if args_cli.show_markers else None
 
     sim.reset()
@@ -342,7 +343,9 @@ if __name__ == "__main__":
 # --headless
 # --device
 # 以及 Isaac Sim/Isaac Lab 自带的一些启动参数
-
+ 
+# --floor_height
+# 控制地面高度，默认为 0.0，即地面在世界坐标系的 Z=0 平面上
 
 # Example:
 # python scripts/tools/visualize_symmetry.py --robot qingyun_z1_A_rev_1_0 --mode pose
@@ -357,4 +360,5 @@ if __name__ == "__main__":
 # --mode motion \
 # --spacing 1.5 \
 # --show_markers \
-# --motion_file source/legged_lab/legged_lab/data/MotionData/qingyun_z1_A_rev_1_0/amp/walk_and_run/B10_-__Walk_turn_left_45_stageii.pkl
+# --floor_height -0.1 \
+# --motion_file temp/lab_data/run1_run1_subject2.pkl
