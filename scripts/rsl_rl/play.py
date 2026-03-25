@@ -223,3 +223,5 @@ if __name__ == "__main__":
 # python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-qingyun_z1_Woposestimation-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/qingyun_z1_amp/2026-03-01_19-28-32/model_2800.pt
 
 # python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-qingyun_z1_A-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/qingyun_z1_A_amp/2026-03-11_20-56-08/model_0.pt
+
+# python scripts/rsl_rl/play.py --task LeggedLab-Isaac-AMP-qingyun_z1_A_rev_1_0-Play-v0 --num_envs 3 --checkpoint logs/rsl_rl/qingyun_z1_A_amp/2026-03-11_20-56-08/model_0.pt
