@@ -46,6 +46,43 @@ def stand_still_joint_deviation_l1(
     # Penalize motion when command is nearly zero.
     return mdp.joint_deviation_l1(env, asset_cfg) * (torch.norm(command[:, :2], dim=1) < command_threshold)
 
+
+def track_lin_vel_xy_exp_custom(
+    env: ManagerBasedRLEnv,
+    std: float,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    body_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="base_link"),
+) -> torch.Tensor:
+    """Reward tracking of linear velocity commands using a selected body frame."""
+    asset: Articulation = env.scene[asset_cfg.name]
+    body_quat_w = asset.data.body_quat_w[:, body_cfg.body_ids[0], :]
+    body_lin_vel_w = asset.data.body_lin_vel_w[:, body_cfg.body_ids[0], :]
+    body_lin_vel_b = math_utils.quat_apply_inverse(body_quat_w, body_lin_vel_w)
+
+    lin_vel_error = torch.sum(
+        torch.square(env.command_manager.get_command(command_name)[:, :2] - body_lin_vel_b[:, :2]),
+        dim=1,
+    )
+    return torch.exp(-lin_vel_error / std**2)
+
+
+def track_ang_vel_z_exp_custom(
+    env: ManagerBasedRLEnv,
+    std: float,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    body_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="base_link"),
+) -> torch.Tensor:
+    """Reward tracking of yaw velocity commands using a selected body frame."""
+    asset: Articulation = env.scene[asset_cfg.name]
+    body_quat_w = asset.data.body_quat_w[:, body_cfg.body_ids[0], :]
+    body_ang_vel_w = asset.data.body_ang_vel_w[:, body_cfg.body_ids[0], :]
+    body_ang_vel_b = math_utils.quat_apply_inverse(body_quat_w, body_ang_vel_w)
+
+    ang_vel_error = torch.square(env.command_manager.get_command(command_name)[:, 2] - body_ang_vel_b[:, 2])
+    return torch.exp(-ang_vel_error / std**2)
+
 def joint_deviation(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     asset: Articulation = env.scene[asset_cfg.name]
     angle = asset.data.joint_pos[:, asset_cfg.joint_ids] - asset.data.default_joint_pos[:, asset_cfg.joint_ids]
@@ -268,4 +305,3 @@ def idle_when_commanded(
     is_idle = vel_magnitude < vel_threshold       # But not moving
     
     return (is_commanded & is_idle).float()
-

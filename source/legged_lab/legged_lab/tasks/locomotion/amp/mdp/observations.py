@@ -80,6 +80,21 @@ def base_ang_vel_custom(
     return body_ang_vel_b
 
 
+def base_lin_vel_custom(
+    env: ManagerBasedEnv,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    body_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="p_waist_yaw"),
+) -> torch.Tensor:
+    """Linear velocity of a specified body in that body's frame."""
+    robot: Articulation = env.scene[asset_cfg.name]
+
+    body_lin_vel_w = robot.data.body_lin_vel_w[:, body_cfg.body_ids[0], :]
+    body_quat = robot.data.body_quat_w[:, body_cfg.body_ids[0], :]
+    body_lin_vel_b = math_utils.quat_apply_inverse(body_quat, body_lin_vel_w)
+
+    return body_lin_vel_b
+
+
 def ref_root_local_rot_tan_norm(
     env: ManagerBasedAnimationEnv,
     animation: str,
@@ -104,4 +119,3 @@ def ref_root_local_rot_tan_norm(
         return obs.reshape(num_envs, -1)
     else:
         return obs
-
