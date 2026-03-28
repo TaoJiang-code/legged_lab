@@ -115,7 +115,8 @@ def run_simulator(
         sim: sim_utils.SimulationContext, 
         scene: InteractiveScene, 
         motion_data_dicts: list[dict[str, np.ndarray]], 
-        key_body_names: list[str]):
+        key_body_names: list[str],
+        tracked_body_name: str | None = None):
     
     robot: Articulation = scene["robot"]
     # marker
@@ -165,6 +166,16 @@ def run_simulator(
         torch.zeros((num_frames, len(key_body_indices), 3), device=scene.device) 
         for num_frames in num_frames_list
     ]
+    tracked_body_idx = None
+    tracked_body_quat_w_list = None
+    if tracked_body_name is not None:
+        if tracked_body_name not in lab_body_names:
+            raise ValueError(f"Tracked body name '{tracked_body_name}' not found in Legged Lab body names.")
+        tracked_body_idx = lab_body_names.index(tracked_body_name)
+        tracked_body_quat_w_list = [
+            torch.zeros((num_frames, 4), device=scene.device)
+            for num_frames in num_frames_list
+        ]
     
     count = 0
     sim_time = 0.0
@@ -202,6 +213,8 @@ def run_simulator(
             if count < num_frames:
                 key_body_pos_w_tensor = robot.data.body_pos_w[motion_idx, key_body_indices, :] - scene.env_origins[motion_idx, :3]
                 key_body_pos_w_list[motion_idx][count, :, :] = key_body_pos_w_tensor
+                if tracked_body_idx is not None and tracked_body_quat_w_list is not None:
+                    tracked_body_quat_w_list[motion_idx][count, :] = robot.data.body_quat_w[motion_idx, tracked_body_idx, :]
         
         vis_key_body_pos_w = robot.data.body_pos_w[:, key_body_indices, :]
         marker.visualize(
@@ -220,6 +233,11 @@ def run_simulator(
         
     for motion_data_dict, key_body_pos_w in zip(motion_data_dicts, key_body_pos_w_list):
         motion_data_dict['key_body_pos'] = key_body_pos_w.cpu().numpy()
+
+    if tracked_body_quat_w_list is not None:
+        for motion_data_dict, tracked_body_quat_w in zip(motion_data_dicts, tracked_body_quat_w_list):
+            motion_data_dict["tracked_body_quat_w"] = tracked_body_quat_w.cpu().numpy()
+            motion_data_dict["tracked_body_name"] = tracked_body_name
         
     return motion_data_dicts
     

@@ -110,12 +110,12 @@ class qingyun_z1_A_rev_1_0_AmpRewards():
         weight=-0.05,
         params={
             # "command_name": "base_velocity",
-            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw", ".*_knee_pitch"])},
+            "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
     )
     joint_deviation_arms = RewTerm(
         func=mdp.joint_deviation_l1,
-        # weight=-0.05,
-        weight=-0.1,
+        weight=-0.05,
+        # weight=-0.1,
         params={
             "asset_cfg": SceneEntityCfg(
                 "robot",
@@ -243,6 +243,18 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         # animation
         # ------------------------------------------------------
         self.animation.animation.num_steps_to_use = AMP_NUM_STEPS
+        self.animation.animation.motion_data_components = [
+            "root_pos_w",
+            "root_quat",
+            "root_vel_w",
+            "root_ang_vel_w",
+            "dof_pos",
+            "dof_vel",
+            "key_body_pos_b",
+            "tracked_body_quat",
+            "tracked_body_ang_vel_w",
+            "tracked_body_ang_vel_b",
+        ]
 
         # -----------------------------------------------------
         # Observations
@@ -308,8 +320,9 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         self.observations.disc.history_length = AMP_NUM_STEPS
         
         # discriminator demostration observations
-        
+        self.observations.disc_demo.ref_root_local_rot_tan_norm.func = mdp.ref_tracked_body_local_rot_tan_norm
         self.observations.disc_demo.ref_root_local_rot_tan_norm.params["animation"] = ANIMATION_TERM_NAME
+        self.observations.disc_demo.ref_root_ang_vel_b.func = mdp.ref_tracked_body_ang_vel_b
         self.observations.disc_demo.ref_root_ang_vel_b.params["animation"] = ANIMATION_TERM_NAME
         self.observations.disc_demo.ref_joint_pos.params["animation"] = ANIMATION_TERM_NAME
         self.observations.disc_demo.ref_joint_vel.params["animation"] = ANIMATION_TERM_NAME

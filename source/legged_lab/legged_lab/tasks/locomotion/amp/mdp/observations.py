@@ -119,3 +119,41 @@ def ref_root_local_rot_tan_norm(
         return obs.reshape(num_envs, -1)
     else:
         return obs
+
+
+def ref_tracked_body_local_rot_tan_norm(
+    env: ManagerBasedAnimationEnv,
+    animation: str,
+    flatten_steps_dim: bool = True,
+) -> torch.Tensor:
+    animation_term: AnimationTerm = env.animation_manager.get_term(animation)
+    num_envs = env.num_envs
+
+    ref_body_quat = animation_term.get_tracked_body_quat()
+    ref_yaw_quat = math_utils.yaw_quat(ref_body_quat)
+    ref_body_quat_local = math_utils.quat_mul(math_utils.quat_conjugate(ref_yaw_quat), ref_body_quat)
+    ref_body_rotm_local = math_utils.matrix_from_quat(ref_body_quat_local)
+
+    tan_vec = ref_body_rotm_local[:, :, :, 0]
+    norm_vec = ref_body_rotm_local[:, :, :, 2]
+    obs = torch.cat([tan_vec, norm_vec], dim=-1)
+
+    if flatten_steps_dim:
+        return obs.reshape(num_envs, -1)
+    else:
+        return obs
+
+
+def ref_tracked_body_ang_vel_b(
+    env: ManagerBasedAnimationEnv,
+    animation: str,
+    flatten_steps_dim: bool = True,
+) -> torch.Tensor:
+    animation_term: AnimationTerm = env.animation_manager.get_term(animation)
+    num_envs = env.num_envs
+
+    ref_body_ang_vel_b = animation_term.get_tracked_body_ang_vel_b()
+    if flatten_steps_dim:
+        return ref_body_ang_vel_b.reshape(num_envs, -1)
+    else:
+        return ref_body_ang_vel_b

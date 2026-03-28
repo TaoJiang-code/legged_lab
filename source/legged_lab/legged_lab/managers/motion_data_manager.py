@@ -61,6 +61,10 @@ class MotionDataTerm(ManagerTermBase):
         self.dof_pos = []
         self.dof_vel = []
         self.key_body_pos_w = []
+        self.tracked_body_quat = []
+        self.tracked_body_ang_vel_w = []
+        self.tracked_body_ang_vel_b = []
+        self.has_tracked_body_data = True
 
         # only load the motion data files that are in the motion weights dict
         for motion_name, motion_weight in self.motion_weights_dict.items():
@@ -120,6 +124,17 @@ class MotionDataTerm(ManagerTermBase):
             # key body position in world frame, shape (num_frames, num_key_bodies, 3)
             key_body_pos_w = torch.from_numpy(motion_raw_data["key_body_pos"]).to(self.device).float()
             key_body_pos_w.requires_grad_(False)
+
+            tracked_body_quat = motion_raw_data.get("tracked_body_quat_w")
+            if tracked_body_quat is None:
+                self.has_tracked_body_data = False
+            else:
+                tracked_body_quat = torch.from_numpy(tracked_body_quat).to(self.device).float()
+                tracked_body_quat.requires_grad_(False)
+                tracked_body_ang_vel_w = ang_vel_from_quat_diff(tracked_body_quat, dt, in_frame="world")
+                tracked_body_ang_vel_w.requires_grad_(False)
+                tracked_body_ang_vel_b = math_utils.quat_apply_inverse(tracked_body_quat, tracked_body_ang_vel_w)
+                tracked_body_ang_vel_b.requires_grad_(False)
             
             self.root_pos_w.append(root_pos_w)
             self.root_quat.append(root_quat)
@@ -128,6 +143,10 @@ class MotionDataTerm(ManagerTermBase):
             self.dof_pos.append(dof_pos)
             self.dof_vel.append(dof_vel)
             self.key_body_pos_w.append(key_body_pos_w)
+            if tracked_body_quat is not None:
+                self.tracked_body_quat.append(tracked_body_quat)
+                self.tracked_body_ang_vel_w.append(tracked_body_ang_vel_w)
+                self.tracked_body_ang_vel_b.append(tracked_body_ang_vel_b)
         
         self.motion_fps = torch.tensor(self.motion_fps, dtype=torch.float32, device=self.device)
         self.motion_dt = torch.tensor(self.motion_dt, dtype=torch.float32, device=self.device)
@@ -150,6 +169,14 @@ class MotionDataTerm(ManagerTermBase):
         self.dof_pos = torch.cat(self.dof_pos, dim=0)
         self.dof_vel = torch.cat(self.dof_vel, dim=0)
         self.key_body_pos_w = torch.cat(self.key_body_pos_w, dim=0)
+        if self.has_tracked_body_data:
+            self.tracked_body_quat = torch.cat(self.tracked_body_quat, dim=0)
+            self.tracked_body_ang_vel_w = torch.cat(self.tracked_body_ang_vel_w, dim=0)
+            self.tracked_body_ang_vel_b = torch.cat(self.tracked_body_ang_vel_b, dim=0)
+        else:
+            self.tracked_body_quat = None
+            self.tracked_body_ang_vel_w = None
+            self.tracked_body_ang_vel_b = None
         
         num_motions = self.get_num_motions()
         self.motion_ids = torch.arange(num_motions, dtype=torch.long, device=self.device)
@@ -309,6 +336,13 @@ class MotionDataTerm(ManagerTermBase):
         dof_vel_1 = self.dof_vel[frame_idx1]
         key_body_pos_w_0 = self.key_body_pos_w[frame_idx0]
         key_body_pos_w_1 = self.key_body_pos_w[frame_idx1]
+        if self.has_tracked_body_data:
+            tracked_body_quat_0 = self.tracked_body_quat[frame_idx0]
+            tracked_body_quat_1 = self.tracked_body_quat[frame_idx1]
+            tracked_body_ang_vel_w_0 = self.tracked_body_ang_vel_w[frame_idx0]
+            tracked_body_ang_vel_w_1 = self.tracked_body_ang_vel_w[frame_idx1]
+            tracked_body_ang_vel_b_0 = self.tracked_body_ang_vel_b[frame_idx0]
+            tracked_body_ang_vel_b_1 = self.tracked_body_ang_vel_b[frame_idx1]
         
         # interpolate the values
 
@@ -328,7 +362,7 @@ class MotionDataTerm(ManagerTermBase):
             key_body_pos_w - root_pos_w.unsqueeze(1)
         )
 
-        return {
+        motion_state = {
             "root_pos_w": root_pos_w,
             "root_quat": root_quat,
             "root_vel_w": root_vel_w,
@@ -339,6 +373,13 @@ class MotionDataTerm(ManagerTermBase):
             "dof_vel": dof_vel,
             "key_body_pos_b": key_body_pos_b,
         }
+        if self.has_tracked_body_data:
+            tracked_body_quat = quat_slerp(q0=tracked_body_quat_0, q1=tracked_body_quat_1, blend=blend.squeeze(-1))
+            motion_state["tracked_body_quat"] = tracked_body_quat
+            motion_state["tracked_body_ang_vel_w"] = torch.lerp(tracked_body_ang_vel_w_0, tracked_body_ang_vel_w_1, blend)
+            motion_state["tracked_body_ang_vel_b"] = torch.lerp(tracked_body_ang_vel_b_0, tracked_body_ang_vel_b_1, blend)
+
+        return motion_state
         
         
 class MotionDataManager(ManagerBase):

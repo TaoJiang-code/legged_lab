@@ -41,6 +41,10 @@ class AnimationTerm(ManagerTermBase):
                 buffer_shape += (3,)
             elif component == "root_quat":
                 buffer_shape += (4,)
+            elif component in ["tracked_body_ang_vel_w", "tracked_body_ang_vel_b"]:
+                buffer_shape += (3,)
+            elif component == "tracked_body_quat":
+                buffer_shape += (4,)
             elif component in ["dof_pos", "dof_vel"]:
                 num_dofs = self.motion_data_term.num_dofs
                 buffer_shape += (num_dofs,)
@@ -230,6 +234,27 @@ class AnimationTerm(ManagerTermBase):
         if env_ids is None:
             return self.root_ang_vel_w_buffer
         return self.root_ang_vel_w_buffer[env_ids, :, :]
+
+    def get_tracked_body_quat(self, env_ids: Sequence[int] = None) -> torch.Tensor:
+        if not hasattr(self, "tracked_body_quat_buffer"):
+            raise AttributeError("tracked_body_quat_buffer not found in AnimationTerm.")
+        if env_ids is None:
+            return self.tracked_body_quat_buffer
+        return self.tracked_body_quat_buffer[env_ids, :, :]
+
+    def get_tracked_body_ang_vel_w(self, env_ids: Sequence[int] = None) -> torch.Tensor:
+        if not hasattr(self, "tracked_body_ang_vel_w_buffer"):
+            raise AttributeError("tracked_body_ang_vel_w_buffer not found in AnimationTerm.")
+        if env_ids is None:
+            return self.tracked_body_ang_vel_w_buffer
+        return self.tracked_body_ang_vel_w_buffer[env_ids, :, :]
+
+    def get_tracked_body_ang_vel_b(self, env_ids: Sequence[int] = None) -> torch.Tensor:
+        if not hasattr(self, "tracked_body_ang_vel_b_buffer"):
+            raise AttributeError("tracked_body_ang_vel_b_buffer not found in AnimationTerm.")
+        if env_ids is None:
+            return self.tracked_body_ang_vel_b_buffer
+        return self.tracked_body_ang_vel_b_buffer[env_ids, :, :]
             
             
 class AnimationManager(ManagerBase):

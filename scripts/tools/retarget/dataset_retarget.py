@@ -168,8 +168,17 @@ def main():
     print("Simulation starting ...")
 
     # run simulator with all motions
-    motion_data_dicts = run_simulator(simulation_app, sim, scene, motion_data_dicts, lab_key_body_names)
-
+    if args_cli.robot == "qingyun_z1_A_rev_1_0":
+        motion_data_dicts = run_simulator(
+            simulation_app,
+            sim,
+            scene,
+            motion_data_dicts,
+            lab_key_body_names,
+            tracked_body_name="p_waist_yaw_link",
+        )
+    else:
+        motion_data_dicts = run_simulator(simulation_app, sim, scene, motion_data_dicts, lab_key_body_names)
     # save outputs
     print("Saving converted motions to output directory...")
     for name, motion in zip(input_names, motion_data_dicts):

@@ -203,7 +203,17 @@ if __name__ == "__main__":
     print("Simulation starting ...")
     
     motion_data_dicts = [motion_data_dict]
-    motion_data_dicts = run_simulator(simulation_app, sim, scene, motion_data_dicts, lab_key_body_names)
+    if args_cli.robot == "qingyun_z1_A_rev_1_0":
+        motion_data_dicts = run_simulator(
+            simulation_app,
+            sim,
+            scene,
+            motion_data_dicts,
+            lab_key_body_names,
+            tracked_body_name="p_waist_yaw_link",
+        )
+    else:
+        motion_data_dicts = run_simulator(simulation_app, sim, scene, motion_data_dicts, lab_key_body_names)
     
     motion_data_dict = motion_data_dicts[0]
     
