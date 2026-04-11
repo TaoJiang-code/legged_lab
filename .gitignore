@@ -38,3 +38,6 @@ _build
 # Temp folders
 **/temp/
 **/tmp/
+
+# Local external repositories
+rsl_rl/

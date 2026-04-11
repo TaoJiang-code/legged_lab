@@ -365,7 +365,7 @@ if __name__ == "__main__":
 # --mode motion \
 # --spacing 1.5 \
 # --show_markers \
-# --height_offset 0.0 \
+# --height_offset 0.1 \
 # --motion_file source/legged_lab/legged_lab/data/MotionData/g1_29dof/amp/walk_and_run/B10_-__Walk_turn_left_45_stageii.pkl
 
 
@@ -376,5 +376,5 @@ if __name__ == "__main__":
 # --mode motion \
 # --spacing 1.5 \
 # --show_markers \
-# --height_offset 0.1 \
-# --motion_file source/legged_lab/legged_lab/data/MotionData/qingyun_z1_A_rev_1_0/amp/walk_and_run/run1_run1_subject2.pkl
+# --height_offset 0.3 \
+# --motion_file source/legged_lab/legged_lab/data/MotionData/qingyun_z1_A_rev_1_0/amp/walk_and_run/walk1_subject1_walk2.pkl

@@ -309,7 +309,7 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         self.events.base_external_force_torque.params["asset_cfg"].body_names = ["base_link"]
         self.events.reset_from_ref.params = {
             "animation": ANIMATION_TERM_NAME,
-            "height_offset": 0.1
+            "height_offset": 0.3
         }
         
         # ------------------------------------------------------
