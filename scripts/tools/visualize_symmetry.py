@@ -34,6 +34,7 @@ parser.add_argument(
 parser.add_argument("--pose_scale", type=float, default=0.2, help="Amplitude of the synthetic asymmetric pose.")
 parser.add_argument("--spacing", type=float, default=1.5, help="Distance between the original and mirrored robots.")
 parser.add_argument("--floor_height", type=float, default=0.0, help="Ground plane height in world Z.")
+parser.add_argument("--height_offset", type=float, default=0.0, help="Robot root height offset in world Z.")
 parser.add_argument(
     "--show_markers",
     action="store_true",
@@ -246,11 +247,12 @@ def main():
 
     origin_a = origin_a.to(sim.device)
     origin_b = origin_b.to(sim.device)
+    height_offset = torch.tensor([0.0, 0.0, args_cli.height_offset], device=sim.device)
 
     default_root_a = robot_a.data.default_root_state.clone()
     default_root_b = robot_b.data.default_root_state.clone()
-    default_root_a[:, :3] = origin_a + default_root_a[:, :3]
-    default_root_b[:, :3] = origin_b + default_root_b[:, :3]
+    default_root_a[:, :3] = origin_a + default_root_a[:, :3] + height_offset
+    default_root_b[:, :3] = origin_b + default_root_b[:, :3] + height_offset
     default_joint_pos = robot_a.data.default_joint_pos.clone()
     joint_names = list(robot_a.data.joint_names)
 
@@ -290,8 +292,8 @@ def main():
         root_state_a = default_root_a.clone()
         root_state_b = default_root_b.clone()
         if root_pos_seq is not None and root_pos_seq.numel() > 0:
-            root_state_a[:, :3] = origin_a + root_pos_seq[frame_idx : frame_idx + 1].to(sim.device)
-            root_state_b[:, :3] = origin_b + root_pos_seq[frame_idx : frame_idx + 1].to(sim.device)
+            root_state_a[:, :3] = origin_a + root_pos_seq[frame_idx : frame_idx + 1].to(sim.device) + height_offset
+            root_state_b[:, :3] = origin_b + root_pos_seq[frame_idx : frame_idx + 1].to(sim.device) + height_offset
         if root_rot_seq is not None and root_rot_seq.numel() > 0:
             root_state_a[:, 3:7] = root_rot_seq[frame_idx : frame_idx + 1].to(sim.device)
             root_state_b[:, 3:7] = root_rot_seq[frame_idx : frame_idx + 1].to(sim.device)
@@ -347,6 +349,9 @@ if __name__ == "__main__":
 # --floor_height
 # 控制地面高度，默认为 0.0，即地面在世界坐标系的 Z=0 平面上
 
+# --height_offset
+# 控制机器人 root 的额外高度偏移，默认为 0.0；正数抬高机器人，负数降低机器人，不改变地面高度
+
 # Example:
 # python scripts/tools/visualize_symmetry.py --robot qingyun_z1_A_rev_1_0 --mode pose
 # python scripts/tools/visualize_symmetry.py --robot g1 --mode motion --motion_file source/legged_lab/legged_lab/data/MotionData/g1_29dof/amp/walk_and_run/B10_-__Walk_turn_left_45_stageii.pkl
@@ -356,9 +361,20 @@ if __name__ == "__main__":
 
 
 # python scripts/tools/visualize_symmetry.py \
+# --robot g1 \
+# --mode motion \
+# --spacing 1.5 \
+# --show_markers \
+# --height_offset 0.0 \
+# --motion_file source/legged_lab/legged_lab/data/MotionData/g1_29dof/amp/walk_and_run/B10_-__Walk_turn_left_45_stageii.pkl
+
+
+
+
+# python scripts/tools/visualize_symmetry.py \
 # --robot qingyun_z1_A_rev_1_0 \
 # --mode motion \
 # --spacing 1.5 \
 # --show_markers \
-# --floor_height -0.3 \
+# --height_offset 0.1 \
 # --motion_file source/legged_lab/legged_lab/data/MotionData/qingyun_z1_A_rev_1_0/amp/walk_and_run/run1_run1_subject2.pkl
