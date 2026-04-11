@@ -207,7 +207,7 @@ class qingyun_z1_A_rev_1_0_AmpEnvCfg(LocomotionAmpEnvCfg):
         )
         self.motion_data.motion_dataset.motion_data_weights = {
             "walk1_subject1_walk2":1.0,
-            # "run1_run1_subject2":1.0,
+            "run1_run1_subject2":1.0,
             "walk1_walk1_subject1":1.0,
             "walk2_walk1_subject1":1.0,
             "walk3_walk1_subject1":1.0,
