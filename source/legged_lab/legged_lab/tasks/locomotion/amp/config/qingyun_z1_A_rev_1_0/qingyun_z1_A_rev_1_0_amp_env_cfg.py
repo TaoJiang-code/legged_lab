@@ -107,7 +107,7 @@ class qingyun_z1_A_rev_1_0_AmpRewards():
  #修改
     joint_deviation_hip = RewTerm(
         func=mdp.joint_deviation_l1,
-        weight=-0.05,
+        weight=-0.1,
         params={
             # "command_name": "base_velocity",
             "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_hip_roll", ".*_hip_yaw"])},
@@ -163,35 +163,6 @@ class qingyun_z1_A_rev_1_0_AmpRewards():
 #     )
 
 #=========================================================================================#
-    # velocity_direction_penalty = RewTerm(
-    #     func=mdp.velocity_direction_penalty,
-    #     weight=-0.4,
-    #     params={
-    #         "command_name": "base_velocity"
-    #     },
-    # )
-
-    # idle_penalty = RewTerm(
-    #     func=mdp.idle_when_commanded,
-    #     weight=-2.0,
-    #     params={"cmd_threshold": 0.2, "vel_threshold": 0.1},
-    # )
-
-    # lin_vel_magnitude_l2 = RewTerm(
-    #     func=mdp.lin_vel_magnitude_l2,
-    #     weight=-1.0,
-    #     params={"command_name": "base_velocity"},
-    # )
-
-    # feet_height_diff = RewTerm(
-    #     func=mdp.feet_height_diff,
-    #     weight=2.0,
-    #     params={
-    #         "command_name": "base_velocity",
-    #         "asset_cfg": SceneEntityCfg("robot", body_names=".*_foot_roll"),
-    #         "cmd_threshold": 0.1,
-    #     },
-    # )
 
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
